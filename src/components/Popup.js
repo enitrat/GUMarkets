@@ -7,7 +7,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
 
     const [price, setPrice] = useState(null);
     const [image, setImage] = useState(null);
-    const [quality, setQuality] = useState(popupCard.metadata.quality)
+    const [quality, setQuality] = useState("Meteorite")
     const [error, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
@@ -105,7 +105,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
                             <p>Quality : {quality}</p>
                             <p>Price : {price}</p>
                             <div className="container d-flex justify-content-center">
-                                <img src={image} alt={popupCard.metadata.proto}></img>
+                                <img src={image} alt={popupCard.id}></img>
                             </div>
                         </div>}
                 </Modal.Body>
