@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/godsunchained/static/css/main.5bd8cb9b.chunk.css",
+    "main.js": "/godsunchained/static/js/main.8e4c5bec.chunk.js",
+    "main.js.map": "/godsunchained/static/js/main.8e4c5bec.chunk.js.map",
+    "runtime-main.js": "/godsunchained/static/js/runtime-main.da01c1c9.js",
+    "runtime-main.js.map": "/godsunchained/static/js/runtime-main.da01c1c9.js.map",
+    "static/css/2.081f420c.chunk.css": "/godsunchained/static/css/2.081f420c.chunk.css",
+    "static/js/2.5b579ab9.chunk.js": "/godsunchained/static/js/2.5b579ab9.chunk.js",
+    "static/js/2.5b579ab9.chunk.js.map": "/godsunchained/static/js/2.5b579ab9.chunk.js.map",
+    "index.html": "/godsunchained/index.html",
+    "static/css/2.081f420c.chunk.css.map": "/godsunchained/static/css/2.081f420c.chunk.css.map",
+    "static/css/main.5bd8cb9b.chunk.css.map": "/godsunchained/static/css/main.5bd8cb9b.chunk.css.map",
+    "static/js/2.5b579ab9.chunk.js.LICENSE.txt": "/godsunchained/static/js/2.5b579ab9.chunk.js.LICENSE.txt",
+    "static/media/logo.aac3612d.png": "/godsunchained/static/media/logo.aac3612d.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da01c1c9.js",
+    "static/css/2.081f420c.chunk.css",
+    "static/js/2.5b579ab9.chunk.js",
+    "static/css/main.5bd8cb9b.chunk.css",
+    "static/js/main.8e4c5bec.chunk.js"
+  ]
+}
