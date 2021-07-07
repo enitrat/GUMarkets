@@ -3,7 +3,7 @@ import Axios from 'axios'
 import Popup from './Popup'
 
 
-function Item({ id, card, showPopup, setPopup, popupCard, setPopupCard }) {
+function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
 
 
     const handleClick = () => {
@@ -12,10 +12,11 @@ function Item({ id, card, showPopup, setPopup, popupCard, setPopupCard }) {
     }
 
 
+
     return (
         <div className="card">
-            <li key={id}>
-                <img className='nft-item-cover' src={card.image_url} alt={`${id} cover`} onClick={handleClick} />
+            <li key={card.id}>
+                <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${card.id}&q=1`} alt={`${card.id} cover`} onClick={handleClick} />
             </li>
 
         </div>

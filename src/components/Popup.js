@@ -18,7 +18,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
         let url = 'https://api.x.immutable.com/v1/orders'
         const json = JSON.stringify(
             {
-                "proto": [`${popupCard.metadata.proto}`],
+                "proto": [`${popupCard.id}`],
                 "quality": [`${quality}`]
             }
         );

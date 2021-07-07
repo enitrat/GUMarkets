@@ -15,9 +15,10 @@ function Collection({ showPopup, setPopup, popupCard, setPopupCard }) {
 
 
     const fetchAPIdata = async () => {
-        let url = 'https://api.x.immutable.com/v1/assets?user=0xC137FBA1F3438f2512b035E2d16274421D0249db'
+        let url = 'https://api.godsunchained.com/v0/proto?perPage=2000'
         const response = await Axios(url)
-        const assets = response.data.result
+        const assets = response.data.records
+        console.log(assets)
         setCards(assets)
     }
 
