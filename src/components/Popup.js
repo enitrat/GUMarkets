@@ -2,7 +2,7 @@ import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 
-function Popup({ showPopup, setPopup, name }) {
+function Popup({ showPopup, setPopup, popupCard }) {
 
     const [price, setPrice] = useState(null);
     const [image, setImage] = useState(null);
@@ -10,32 +10,11 @@ function Popup({ showPopup, setPopup, name }) {
 
     var minPrice = Number.MAX_SAFE_INTEGER
 
-    const fetchImg = async () => {
-        const json = JSON.stringify(
-            {
-                "proto": [`${name}`],
-                "quality": [`${quality}`]
-            }
-        );
-        console.log(json)
-        let url = 'https://api.x.immutable.com/v1/assets'
-        const response = await Axios.get(url,
-            {
-                params:
-                {
-                    metadata: json
-                }
-            })
-        const results = response.data.result[1]
-        const image_url = results.image_url
-        setImage(image_url)
-    }
-
     const fetchPrice = async () => {
         let url = 'https://api.x.immutable.com/v1/orders'
         const json = JSON.stringify(
             {
-                "proto": [`${name}`],
+                "proto": [`${popupCard.metadata.proto}`],
                 "quality": [`${quality}`]
             }
         );
@@ -50,8 +29,8 @@ function Popup({ showPopup, setPopup, name }) {
 
                 }
             })
-        const orders = response.data.result
-        orders.map((order) => {
+        const result = response.data.result
+        result.map((order) => {
 
             let quantity = order.buy.data.quantity
             let decimals = order.buy.data.decimals
@@ -59,12 +38,14 @@ function Popup({ showPopup, setPopup, name }) {
             minPrice = minPrice > currentPrice ? currentPrice : minPrice
         })
 
+        const image_url = result[1].sell.data.properties.image_url;
+
         setPrice(minPrice)
+        setImage(image_url)
     }
 
     useEffect(() => {
         fetchPrice();
-        fetchImg();
     }, [])
 
     const handleClick = () => {
@@ -75,7 +56,7 @@ function Popup({ showPopup, setPopup, name }) {
         <div className="jumbotron">
             <div className="modal_content">
                 <span className="close" onClick={handleClick}>&times;    </span>
-                <p>{name}</p>
+                <p>{popupCard.name}</p>
                 <p>{price}</p>
                 <img src={image} alt="card-image" />
             </div>

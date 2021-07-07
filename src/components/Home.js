@@ -5,16 +5,16 @@ import Popup from './Popup'
 function Home() {
 
     const [showPopup, setPopup] = useState(false);
-    const [popupName, setPopupName] = useState('')
+    const [popupCard, setPopupCard] = useState(null)
 
-    console.log(popupName)
+    console.log(popupCard)
 
     return (
         <div className="container">
             {showPopup ?
-                <Popup showPopup={showPopup} setPopup={setPopup} name={popupName} />
+                <Popup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
                 : null}
-            <Collection showPopup={showPopup} setPopup={setPopup} popupName={popupName} setPopupName={setPopupName} />
+            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />
         </div>
     )
 }
