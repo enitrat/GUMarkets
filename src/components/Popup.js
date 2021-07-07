@@ -1,6 +1,7 @@
 import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
+import { Modal, Button } from 'react-bootstrap';
 
 function Popup({ showPopup, setPopup, popupCard }) {
 
@@ -48,19 +49,37 @@ function Popup({ showPopup, setPopup, popupCard }) {
         fetchPrice();
     }, [])
 
-    const handleClick = () => {
+    const handleClose = () => {
         setPopup(!showPopup)
 
     }
     return (
-        <div className="jumbotron">
-            <div className="modal_content">
-                <span className="close" onClick={handleClick}>&times;    </span>
-                <p>{popupCard.name}</p>
-                <p>{price}</p>
-                <img src={image} alt="card-image" />
-            </div>
-        </div>
+        <>
+            <Modal show={showPopup} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{popupCard.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Quality : {popupCard.metadata.quality}</p>
+                    <p>Price : {price}</p>
+                    <img src={image} alt={popupCard.metadata.proto}></img>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Meteorite
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Shadow
+                    </Button>
+                    <Button variant="warning" onClick={handleClose}>
+                        Gold
+                    </Button>
+                    <Button variant="link" onClick={handleClose}>
+                        Diamond
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 
