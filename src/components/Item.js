@@ -11,8 +11,6 @@ function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
         setPopupCard(card)
     }
 
-
-
     return (
         <div className="card">
             <li key={card.id}>

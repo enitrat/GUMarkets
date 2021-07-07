@@ -11,10 +11,11 @@ function Home() {
 
     return (
         <div className="container">
+            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />
             {showPopup ?
                 <Popup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
                 : null}
-            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />
+
         </div>
     )
 }
