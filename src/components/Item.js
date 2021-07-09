@@ -14,8 +14,7 @@ function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
     return (
         <div className="card">
             <li key={card.id}>
-                <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${card.id}&q=1`} alt={`${card.id} cover`} onClick={handleClick} />
-                <h6> {card.name}</h6>
+                <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${card.id}&q=4`} alt={`${card.id} cover`} onClick={handleClick} />
             </li>
 
         </div>

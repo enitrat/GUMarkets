@@ -107,6 +107,8 @@ function Popup({ showPopup, setPopup, popupCard }) {
                             <div className="container d-flex justify-content-center">
                                 <img src={image} alt={popupCard.id}></img>
                             </div>
+                            <button>BUY</button>
+                            <button>SELL</button>
                         </div>}
                 </Modal.Body>
                 <Modal.Footer>
