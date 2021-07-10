@@ -94,7 +94,7 @@ export async function getAllUserAssets() {
     let assetCursor;
     let assets = [];
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const address = '0xC137FBA1F3438f2512b035E2d16274421D0249db'
+    const address = localStorage.getItem('WALLET_ADDRESS');
     do {
         let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true }).then(assets => { return assets });
 
