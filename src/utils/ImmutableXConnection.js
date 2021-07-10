@@ -4,20 +4,19 @@
 import { Link } from '@imtbl/imx-link-sdk';
 import { ImmutableXClient } from '@imtbl/imx-link-lib';
 import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-link-types';
+import { createPortal } from 'react-dom';
 
-//const linkAddress = 'https://link.x.immutable.com';
-//const apiAddress = 'https://api.x.immutable.com/v1';
+const linkAddress = 'https://link.x.immutable.com';
+const apiAddress = 'https://api.x.immutable.com/v1';
 // Ropsten Testnet
-const linkAddress = 'https://link.uat.x.immutable.com';
-const apiAddress = 'https://api.uat.x.immutable.com/v1';
+//const linkAddress = 'https://link.uat.x.immutable.com';
+//const apiAddress = 'https://api.uat.x.immutable.com/v1';
 
 //The token address for the collection to be monitored. Currently set to Gods Unchained
-const COLLECTION_ADDRESS = '0x0e3a2a1f2146d86a604adc220b4967a898d7fe07';
+const COLLECTION_ADDRESS = '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c';
 
 const link = new Link(linkAddress);
-async function client() {
-    return await ImmutableXClient.build({ publicApiUrl: apiAddress });
-}
+
 
 const WALLET_ADDRESS = 'WALLET_ADDRESS';
 const STARK_PUBLIC_KEY = 'STARK_PUBLIC_KEY';
@@ -40,6 +39,7 @@ export function logout() {
 
 //Get the user balances
 export async function getUserBalances() {
+    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
     const address = localStorage.getItem('WALLET_ADDRESS');
     return await client.getBalances({ user: address });
 }
@@ -83,14 +83,39 @@ export async function showUserHistory() {
  * @returns Object containing the assets and a cursor if more assets remain to be retrieved
  */
 export async function getUserAssets(assetCursor) {
+    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
     const address = localStorage.getItem('WALLET_ADDRESS');
     const assetsRequest = await client.getAssets({ user: address, cursor: assetCursor, status: 'imx', collection: COLLECTION_ADDRESS });
     return { assets: assetsRequest.result, cursor: assetsRequest.cursor };
 }
 
+
+export async function getAllUserAssets() {
+    let assetCursor;
+    let assets = [];
+    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
+    const address = '0xC137FBA1F3438f2512b035E2d16274421D0249db'
+    do {
+        let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true }).then(assets => { return assets });
+
+        assets = assets.concat(assetRequest.result);
+        assetCursor = assetRequest.cursor;
+
+    } while (assetCursor);
+    console.log(assets)
+
+    for (let asset of assets) {
+        asset.isListed = false;
+        if (asset.orders?.sell_orders?.length > 0) {
+            asset.isListed = true;
+        }
+    }
+
+}
+
 //Opens the Link SDK popup to sell an asset as the specified price
-export async function sellAsset(asset, priceInEth) {
-    let sellParams = { amount: priceInEth, tokenId: asset.id, tokenAddress: asset.token_address };
+export async function sellAsset(tokenId, tokenAddress, priceInEth) {
+    let sellParams = { amount: priceInEth, tokenId: tokenId, tokenAddress: tokenAddress };
     //Throws an error if not successful
     await link.sell(sellParams);
 }
@@ -117,6 +142,7 @@ export async function transferERC721(asset, addressToSendTo) {
  * @returns Object containing the cheapest orders and a cursor if more orders remain
  */
 export async function getCheapestSellOrders(ordersCursor, tokenName, metadata) {
+    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
     const ordersRequest = await client.getOrders({
         cursor: ordersCursor,
         status: 'active',
@@ -131,7 +157,7 @@ export async function getCheapestSellOrders(ordersCursor, tokenName, metadata) {
 
 //Opens the Link SDK popup to complete an order
 export async function fillOrder(order) {
-    await link.buy({ orderId: order.order_id });
+    await link.buy({ orderId: order });
 }
 
 //////////////////////////////////////////////////////////////////////////////

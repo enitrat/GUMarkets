@@ -66,7 +66,6 @@ function App() {
 	}
 	return (
 		<div>
-			<Header />
 			<button onClick={handleConnect}>LOG IN </button>
 			<button onClick={handleClick}>DEPOSIT TO IMX </button>
 			<button onClick={showFunds}>SHOW FUNDS</button>
