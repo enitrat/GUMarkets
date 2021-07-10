@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Axios from 'axios'
 import Item from './Item'
 import '../styles/Collection.css'
 import { fetchProtoCollection } from '../utils/getProtoCollection'

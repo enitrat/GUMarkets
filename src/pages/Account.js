@@ -1,7 +1,7 @@
-import { setupAndLogin, getUserAssets, getAllUserAssets, testUser } from '../utils/ImmutableXConnection'
+import { setupAndLogin } from '../utils/ImmutableXConnection'
 import { LoggedContext } from '../utils/context'
 import { useEffect, useState, useContext } from 'react'
-import { createPortal } from 'react-dom'
+
 import OwnedCollection from '../components/OwnedCollection'
 import OwnedPopup from '../components/OwnedPopup'
 
@@ -26,7 +26,6 @@ function Account() {
             }
         }
         setAddress(localStorage.getItem('WALLET_ADDRESS'))
-
     }
 
     useEffect(() => {

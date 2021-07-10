@@ -20,10 +20,14 @@ function Popup({ showPopup, setPopup, popupCard }) {
     async function getBestPrice() {
         setLoading(true)
         try {
+            setError(false)
             const { bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
             setPrice(bestOrder.minPrice)
             setOrderID(bestOrder.orderID)
             setImage(image_url)
+            if (bestOrder.orderID === null) {
+                setError(true)
+            }
 
         } catch (err) {
             setError(true);
@@ -92,16 +96,17 @@ function Popup({ showPopup, setPopup, popupCard }) {
                         <div className="container d-flex justify-content-center">
                             <Spinner animation="grow" /> </div>
                         :
-                        <div>
-                            <p>Quality : {quality}</p>
-                            <p>Price : {price}</p>
-                            <div className="container d-flex justify-content-center">
-                                <img src={image} alt={popupCard.id}></img>
-                            </div>
-                            <div className="container d-flex justify-content-center">
-                                <BuyButton onClick={handleBuy}>Buy</BuyButton>
-                            </div>
-                        </div>}
+                        error ? <h5>this card is not available for trade</h5> :
+                            <div>
+                                <p>Quality : {quality}</p>
+                                <p>Price : {price}</p>
+                                <div className="container d-flex justify-content-center">
+                                    <img src={image} alt={popupCard.id}></img>
+                                </div>
+                                <div className="container d-flex justify-content-center">
+                                    <BuyButton onClick={handleBuy}>Buy</BuyButton>
+                                </div>
+                            </div>}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleMeteorite}>

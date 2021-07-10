@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react'
-import Axios from 'axios'
-import Popup from './Popup'
-import styled from 'styled-components'
+
 import { ImageWrapper } from '../styles/GlobalStyle'
 
 

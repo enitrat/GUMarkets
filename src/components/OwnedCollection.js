@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
-import Axios from 'axios'
 import OwnedCard from './OwnedCard'
 import styled from 'styled-components'
 import '../styles/Collection.css'
-import { fetchAssets } from '../utils/getProtoCollection'
 import { getAllUserAssets } from '../utils/ImmutableXConnection'
 import { Spinner } from 'react-bootstrap'
 

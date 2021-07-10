@@ -1,10 +1,9 @@
 import '../styles/Header.css'
 import styled from 'styled-components'
 import Logo from '../assets/logo.png'
-import Web3 from 'web3';
 import { Link } from 'react-router-dom'
 import { setupAndLogin, logout } from '../utils/ImmutableXConnection'
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { LoggedContext } from '../utils/context'
 import { useHistory } from "react-router-dom";
 import { DefaultButton } from '../styles/GlobalStyle'
@@ -28,7 +27,6 @@ function Header() {
 
 
     const { logged, setLogged } = useContext(LoggedContext);
-    const address = localStorage.getItem('WALLET_ADDRESS')
     const history = useHistory();
 
     async function handleConnect() {
@@ -74,8 +72,8 @@ function Header() {
             </div>
             <NavContainer>
                 {logged ? <DefaultButton onClick={handleDisconnect}>Disconnect</DefaultButton> : (<DefaultButton onClick={handleConnect}>Connect</DefaultButton>)}
-                <Link className="link" to="/browse" >Browse Cards</Link>
-                <Link className="link" to="/account">Your Cards</Link>
+                <StyledLink className="link" to="/browse" >Browse Cards</StyledLink>
+                <StyledLink className="link" to="/account">Your Cards</StyledLink>
             </NavContainer>
         </div>
     )
