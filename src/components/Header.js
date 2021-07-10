@@ -1,4 +1,5 @@
 import '../styles/Header.css'
+import styled from 'styled-components'
 import Logo from '../assets/logo.png'
 import Web3 from 'web3';
 import { Link } from 'react-router-dom'
@@ -6,8 +7,25 @@ import { setupAndLogin, logout } from '../utils/ImmutableXConnection'
 import { useState, useContext } from 'react'
 import { LoggedContext } from '../utils/context'
 import { useHistory } from "react-router-dom";
+import { DefaultButton } from '../styles/GlobalStyle'
 
 function Header() {
+
+    const NavContainer = styled.nav`
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+    const StyledLink = styled(Link)`
+  padding: 10px 15px;
+  color: #8186a0;
+  text-decoration: none;
+  font-size: 18px;
+  text-align: center;
+`
+
+
 
     const { logged, setLogged } = useContext(LoggedContext);
     const address = localStorage.getItem('WALLET_ADDRESS')
@@ -36,7 +54,7 @@ function Header() {
         if (logged) {
             logout();
             setLogged(false)
-            let path = `/`;
+            let path = `/browse`;
             history.push(path);
             alert("user disconnecterd")
         }
@@ -48,14 +66,17 @@ function Header() {
 
     return (
         <div className=" jumbotron d-flex headerWrapper">
-            <img src={Logo} className="mainLogo" alt="mainLogo" />
-            <h1 className="mainTitle">GodsUnchained</h1>
-            <button onClick={handleConnect}>{logged ? <span>{address}</span> : <span>Connect</span>}</button>
-            <button onClick={handleDisconnect}>Disconnect</button>
-            <nav>
-                <Link to="/" >Home page</Link>
-                <Link to="/account">Your account</Link>
-            </nav>
+            <div className="d-flex">
+                <img src={Logo} className="mainLogo" alt="mainLogo" />
+            </div>
+            <div className="d-flex">
+
+            </div>
+            <NavContainer>
+                {logged ? <DefaultButton onClick={handleDisconnect}>Disconnect</DefaultButton> : (<DefaultButton onClick={handleConnect}>Connect</DefaultButton>)}
+                <Link className="link" to="/browse" >Browse Cards</Link>
+                <Link className="link" to="/account">Your Cards</Link>
+            </NavContainer>
         </div>
     )
 }

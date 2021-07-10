@@ -33,7 +33,7 @@ function Collection({ showPopup, setPopup, popupCard, setPopupCard }) {
     return (
         <>
             <div className="container d-flex justify-content-center">
-                <input type="text" onChange={handleInput} />
+                <input type="text" placeholder="Search a card" onChange={handleInput} />
             </div>
             <ul className="list-unstyled">
                 <div className="row">

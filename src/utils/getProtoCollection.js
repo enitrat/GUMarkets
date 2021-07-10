@@ -62,7 +62,8 @@ export const fetchBestPrice = async (popupCard, quality) => {
 
 }
 
-export const fetchAssets = async () => {
+export const toEthPrice = (price) => {
+    return (price * Math.pow(10, -18)).toFixed(6);
 
 }
 

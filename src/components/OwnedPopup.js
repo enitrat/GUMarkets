@@ -2,13 +2,42 @@ import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Modal, Button, Spinner } from 'react-bootstrap';
-import { sellAsset, fillOrder } from '../utils/ImmutableXConnection.js'
+import { toEthPrice } from '../utils/getProtoCollection'
+import { sellAsset, fillOrder, getCheapestSellOrders } from '../utils/ImmutableXConnection.js'
+import { BuyButton, SellButton } from '../styles/GlobalStyle'
 
 
 function OwnedPopup({ showPopup, setPopup, popupCard }) {
 
     const [sellPrice, setSellPrice] = useState(null)
     const [isLoading, setLoading] = useState(false);
+    const [orders, setOrders] = useState([])
+
+    async function fetchCheapestSellOrders() {
+        setLoading(true)
+        try {
+            const json = JSON.stringify(
+                {
+                    "proto": [`${popupCard.metadata.proto}`],
+                    "quality": [`${popupCard.metadata.quality}`]
+                }
+            );
+            const myOrders = await getCheapestSellOrders(5, '', json)
+            setOrders(myOrders.orders)
+            console.log(myOrders)
+
+        } catch (err) {
+            console.log(err)
+        }
+        finally {
+            setLoading(false)
+        }
+
+    }
+
+    useEffect(() => {
+        fetchCheapestSellOrders();
+    }, [])
 
     const handleClose = () => {
         setPopup(!showPopup)
@@ -31,6 +60,11 @@ function OwnedPopup({ showPopup, setPopup, popupCard }) {
         setSellPrice(e.target.value)
     }
 
+    const handleBuy = (e) => {
+        console.log(e.target.value)
+        fillOrder(e.target.value)
+    }
+
     return (
         <>
             <Modal show={showPopup} onHide={handleClose}>
@@ -47,13 +81,18 @@ function OwnedPopup({ showPopup, setPopup, popupCard }) {
                             <div className="container d-flex justify-content-center">
                                 <img src={popupCard.image_url} alt={popupCard.id}></img>
                             </div>
+                            <p>For sale:
+                                {orders.map((order) => (
+                                    <p><BuyButton value={order.order_id} onClick={handleBuy}>BUY</BuyButton> : {toEthPrice(order.buy.data.quantity)} </p>
+                                )
+                                )}</p>
                         </div>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <label>
-                        ETH price : <input type="text" name="ethprice" onChange={handleChange} />
-                    </label>
-                    <button onClick={handleSell}>SELL</button>
+                    <div className="container d-flex content-center">
+                        <input type="text" name="ethprice" placeHolder="eth Price" onChange={handleChange} />
+                        <SellButton onClick={handleSell}>Sell yours</SellButton>
+                    </div>
                 </Modal.Footer>
             </Modal>
 

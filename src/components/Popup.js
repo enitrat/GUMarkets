@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import { sellAsset, fillOrder } from '../utils/ImmutableXConnection.js'
 import { fetchBestPrice } from '../utils/getProtoCollection'
+import { BuyButton, SellButton } from '../styles/GlobalStyle'
 
 
 function Popup({ showPopup, setPopup, popupCard }) {
@@ -94,11 +95,12 @@ function Popup({ showPopup, setPopup, popupCard }) {
                         <div>
                             <p>Quality : {quality}</p>
                             <p>Price : {price}</p>
-                            <p>Order ID : {orderID}</p>
                             <div className="container d-flex justify-content-center">
                                 <img src={image} alt={popupCard.id}></img>
                             </div>
-                            <button onClick={handleBuy}>BUY</button>
+                            <div className="container d-flex justify-content-center">
+                                <BuyButton onClick={handleBuy}>Buy</BuyButton>
+                            </div>
                         </div>}
                 </Modal.Body>
                 <Modal.Footer>

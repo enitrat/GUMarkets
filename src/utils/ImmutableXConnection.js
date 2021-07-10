@@ -94,7 +94,7 @@ export async function getAllUserAssets() {
     let assetCursor;
     let assets = [];
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const address = '0xC137FBA1F3438f2512b035E2d16274421D0249db';
+    const address = localStorage.getItem('WALLET_ADDRESS');
     try {
         do {
             let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true });
@@ -146,18 +146,23 @@ export async function transferERC721(asset, addressToSendTo) {
  * @param {*} metadata - optional JSON string metadata to filter on 
  * @returns Object containing the cheapest orders and a cursor if more orders remain
  */
-export async function getCheapestSellOrders(ordersCursor, tokenName, metadata) {
-    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const ordersRequest = await client.getOrders({
-        cursor: ordersCursor,
-        status: 'active',
-        sell_token_address: COLLECTION_ADDRESS,
-        name: tokenName,
-        sell_metadata: metadata,
-        order_by: 'buy_quantity',
-        direction: 'asc'
-    });
-    return { orders: ordersRequest.result, cursor: ordersRequest.cursor };
+export async function getCheapestSellOrders(pageSize, ordersCursor, metadata) {
+    try {
+        const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
+        const ordersRequest = await client.getOrders({
+            page_size: pageSize,
+            cursor: ordersCursor,
+            status: 'active',
+            sell_token_address: COLLECTION_ADDRESS,
+            sell_metadata: metadata,
+            order_by: 'buy_quantity',
+            direction: 'asc'
+        });
+        return { orders: ordersRequest.result, cursor: ordersRequest.cursor };
+    } catch (err) {
+        console.log(err)
+
+    }
 }
 
 //Opens the Link SDK popup to complete an order
