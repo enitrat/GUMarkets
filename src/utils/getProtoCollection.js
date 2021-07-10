@@ -62,3 +62,7 @@ export const fetchBestPrice = async (popupCard, quality) => {
 
 }
 
+export const fetchAssets = async () => {
+
+}
+

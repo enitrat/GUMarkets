@@ -94,28 +94,33 @@ export async function getAllUserAssets() {
     let assetCursor;
     let assets = [];
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const address = localStorage.getItem('WALLET_ADDRESS');
-    do {
-        let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true }).then(assets => { return assets });
+    const address = '0xC137FBA1F3438f2512b035E2d16274421D0249db';
+    try {
+        do {
+            let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true });
+            assets = assets.concat(assetRequest.result);
+            assetCursor = assetRequest.cursor;
 
-        assets = assets.concat(assetRequest.result);
-        assetCursor = assetRequest.cursor;
+        } while (assetCursor);
 
-    } while (assetCursor);
-    console.log(assets)
-
-    for (let asset of assets) {
-        asset.isListed = false;
-        if (asset.orders?.sell_orders?.length > 0) {
-            asset.isListed = true;
+        for (let asset of assets) {
+            asset.isListed = false;
+            if (asset.orders?.sell_orders?.length > 0) {
+                asset.isListed = true;
+            }
         }
+    } catch (err) {
+        console.log(err)
+    }
+    finally {
+        return assets;
     }
 
 }
 
 //Opens the Link SDK popup to sell an asset as the specified price
-export async function sellAsset(tokenId, tokenAddress, priceInEth) {
-    let sellParams = { amount: priceInEth, tokenId: tokenId, tokenAddress: tokenAddress };
+export async function sellAsset(asset, priceInEth) {
+    let sellParams = { amount: priceInEth, tokenId: asset.id, tokenAddress: asset.token_address };
     //Throws an error if not successful
     await link.sell(sellParams);
 }

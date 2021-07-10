@@ -1,4 +1,4 @@
-import Home from './Home'
+import Home from '../pages/Home'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header'
 import { setupAndLogin, client, getCheapestSellOrders } from '../utils/ImmutableXConnection.js'

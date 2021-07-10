@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import Collection from "./Collection"
-import Popup from './Popup'
+import Collection from "../components/Collection"
+import Popup from '../components/Popup'
 
 function Home() {
 

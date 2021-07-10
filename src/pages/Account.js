@@ -2,15 +2,16 @@ import { setupAndLogin, getUserAssets, getAllUserAssets, testUser } from '../uti
 import { LoggedContext } from '../utils/context'
 import { useEffect, useState, useContext } from 'react'
 import { createPortal } from 'react-dom'
-import Item from '../components/Item'
+import OwnedCollection from '../components/OwnedCollection'
+import OwnedPopup from '../components/OwnedPopup'
 
 function Account() {
 
     const { logged, setLogged } = useContext(LoggedContext);
     const [address, setAddress] = useState('')
-    const [cards, setCards] = useState([])
     const [showPopup, setPopup] = useState(false);
     const [popupCard, setPopupCard] = useState(null)
+
 
 
     async function logAccount() {
@@ -25,7 +26,6 @@ function Account() {
             }
         }
         setAddress(localStorage.getItem('WALLET_ADDRESS'))
-        fetchAssets();
 
     }
 
@@ -34,35 +34,12 @@ function Account() {
     }, [])
 
 
-    async function fetchAssets() {
-        try {
-            const res = await getAllUserAssets();
-            setCards(res)
-        }
-        catch (err) {
-            console.log(err)
-        }
-
-    }
-
     return (
-        <div>
-            <h1>My user Page</h1>
-            <span>My address : {address} </span>
-            <span>My collection : </span>
-            {logged ?
-                <ul className="list-unstyled">
-                    <div className="row">
-                        {cards.map((card) => (
-                            <Item key={card.id} card={card} showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />)
-                        )}
-                    </div>
-                </ul>
-                :
-                null
-
-            }
-
+        <div className="container">
+            <OwnedCollection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} user={address} />
+            {showPopup ?
+                <OwnedPopup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
+                : null}
         </div>
     )
 }
