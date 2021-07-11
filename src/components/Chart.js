@@ -1,5 +1,16 @@
-
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import {
+    ComposedChart,
+    Line,
+    Area,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    Scatter,
+    ResponsiveContainer,
+} from 'recharts';
 import { getPriceHistory } from '../utils/ImmutableXConnection.js'
 import { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
@@ -35,13 +46,27 @@ function Chart({ proto, quality }) {
                     <Spinner animation="grow" /> </SpinnerWrapper>
                 :
                 <div className="d-flex align-items-center">
-                    <LineChart width={500} height={300} data={history}>
-                        <Line type="monotone" dataKey="price" stroke="#8884d8" />
-                        <CartesianGrid stroke="#ccc" />
+                    <ComposedChart
+                        width={500}
+                        height={400}
+                        data={history}
+                        margin={{
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20,
+                        }}
+                    >
+                        <CartesianGrid stroke="#f5f5f5" />
                         <XAxis dataKey="time" />
-                        <YAxis />
+                        <YAxis yAxisId="left" />
+                        <YAxis yAxisId="right" orientation="right" domain={[0, dataMax => (dataMax * 5)]} />
                         <Tooltip />
-                    </LineChart>
+                        <Legend />
+                        <Line yAxisId="left" type="monotone" dataKey="data.price" stroke="#8884d8" />
+                        <Bar yAxisId="right" dataKey="data.volume" barSize={5} fill="#413ea0" />
+
+                    </ComposedChart>
                 </div>
             }
         </>

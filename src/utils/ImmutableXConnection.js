@@ -203,24 +203,39 @@ export async function getPriceHistory(metadata) {
     let h_prices = [];
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let map = new Map();
+    let volume;
+    let price;
     try {
         const orders = await getOrdersHistory(metadata);
         console.log(orders)
         orders.forEach((order) => {
+
             let unixtime = Date.parse(order.updated_timestamp)
             let time = new Date(unixtime)
             let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
-            map.set(f_time, toEthPrice(order.buy.data.quantity));
+            if (map.has(f_time)) {
+                const res = map.get(f_time);
+                price = (+res.price + +toEthPrice(order.buy.data.quantity))
+                volume = res.volume
+            }
+            else {
+                volume = 0;
+                price = (+toEthPrice(order.buy.data.quantity))
+
+            }
+            price.toFixed(6)
+
+            map.set(f_time, { price: price, volume: (volume + 1) });
         });
         console.log(map)
         map.forEach((value, key) => {
             let dict = {
                 time: key,
-                price: value
+                data: value
             }
             h_prices = h_prices.concat(dict)
         })
-        return h_prices
+        return h_prices;
     } catch (err) {
         console.log(err)
     }
