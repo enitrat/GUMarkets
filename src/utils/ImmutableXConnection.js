@@ -94,7 +94,7 @@ export async function getAllUserAssets() {
     let assetCursor;
     let assets = [];
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const address = localStorage.getItem('WALLET_ADDRESS');
+    const address = '0xC137FBA1F3438f2512b035E2d16274421D0249db'
     try {
         do {
             let assetRequest = await client.getAssets({ user: address, status: 'imx', collection: COLLECTION_ADDRESS, sell_orders: true });
@@ -165,9 +165,75 @@ export async function getCheapestSellOrders(pageSize, ordersCursor, metadata) {
     }
 }
 
+export async function getOrdersHistory(metadata) {
+    let ordersCursors;
+    let orders = [];
+    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
+    const address = localStorage.getItem('WALLET_ADDRESS');
+    const min_date = new Date()
+    min_date.setMonth(min_date.getMonth() - 1);
+    try {
+        do {
+            let ordersRequest = await client.getOrders({
+                page_size: 200,
+                cursor: ordersCursors,
+                status: 'filled',
+                sell_token_address: COLLECTION_ADDRESS,
+                sell_metadata: metadata,
+                order_by: 'timestamp',
+                direction: 'asc',
+                min_timestamp: min_date.toISOString()
+
+            });
+            orders = orders.concat(ordersRequest.result);
+            ordersCursors = ordersRequest.cursor;
+
+
+        } while (ordersCursors);
+    } catch (err) {
+        console.log(err);
+    }
+    finally {
+        return orders;
+    }
+
+}
+
+export async function getPriceHistory(metadata) {
+    let h_prices = [];
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let map = new Map();
+    try {
+        const orders = await getOrdersHistory(metadata);
+        console.log(orders)
+        orders.forEach((order) => {
+            let unixtime = Date.parse(order.updated_timestamp)
+            let time = new Date(unixtime)
+            let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
+            map.set(f_time, toEthPrice(order.buy.data.quantity));
+        });
+        console.log(map)
+        map.forEach((value, key) => {
+            let dict = {
+                time: key,
+                price: value
+            }
+            h_prices = h_prices.concat(dict)
+        })
+        return h_prices
+    } catch (err) {
+        console.log(err)
+    }
+
+}
 //Opens the Link SDK popup to complete an order
 export async function fillOrder(order) {
     await link.buy({ orderId: order });
+}
+
+export const toEthPrice = (price) => {
+    return (price * Math.pow(10, -18)).toFixed(6);
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

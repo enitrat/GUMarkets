@@ -2,9 +2,12 @@ import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Modal, Button, Spinner } from 'react-bootstrap';
-import { sellAsset, fillOrder } from '../utils/ImmutableXConnection.js'
+import { sellAsset, fillOrder, getOrdersHistory, getCheapestSellOrders, getPriceHistory } from '../utils/ImmutableXConnection.js'
 import { fetchBestPrice } from '../utils/getProtoCollection'
 import { BuyButton, SellButton } from '../styles/GlobalStyle'
+import Chart from './Chart'
+import styled from 'styled-components';
+
 
 
 function Popup({ showPopup, setPopup, popupCard }) {
@@ -16,11 +19,21 @@ function Popup({ showPopup, setPopup, popupCard }) {
     const [error, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
+    const Pcontainer = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content : center;
+  align-items:center;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`
 
-    async function getBestPrice() {
+    async function init() {
         setLoading(true)
         try {
             setError(false)
+            //get best price for this card
             const { bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
             setPrice(bestOrder.minPrice)
             setOrderID(bestOrder.orderID)
@@ -40,11 +53,11 @@ function Popup({ showPopup, setPopup, popupCard }) {
 
 
     useEffect(() => {
-        getBestPrice(popupCard, quality);
+        init(popupCard, quality);
     }, [])
 
     useEffect(() => {
-        getBestPrice(popupCard, quality);
+        init(popupCard, quality);
     }, [quality])
 
     const handleClose = () => {
@@ -87,7 +100,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
     return (
         <>
 
-            <Modal show={showPopup} onHide={handleClose}>
+            <Modal show={showPopup} onHide={handleClose} dialogClassName="modal-80w">
                 <Modal.Header closeButton>
                     <Modal.Title>{popupCard.name}</Modal.Title>
                 </Modal.Header>
@@ -100,13 +113,17 @@ function Popup({ showPopup, setPopup, popupCard }) {
                             <div>
                                 <p>Quality : {quality}</p>
                                 <p>Price : {price}</p>
-                                <div className="container d-flex justify-content-center">
+                                <Pcontainer>
                                     <img src={image} alt={popupCard.id}></img>
-                                </div>
-                                <div className="container d-flex justify-content-center">
+                                    <Chart proto={popupCard.id} quality={quality} />
+                                </Pcontainer>
+                                <div className="d-flex justify-content-center">
                                     <BuyButton onClick={handleBuy}>Buy</BuyButton>
                                 </div>
-                            </div>}
+                            </div>
+
+                    }
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleMeteorite}>

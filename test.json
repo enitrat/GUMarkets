@@ -1,7 +1,166 @@
-{'pairs': [
-        {'direction': 'Luna to Bluna', 'diff': '2.4117%', 'ratio': 1.027117, 'spread': 1
+{
+    "result": [
+        {
+            "order_id": 123431,
+            "status": "filled",
+            "user": "0xe443ad699d30bfa69790767ddd86ff6f483f4d87",
+            "sell": {
+                "type": "ERC721",
+                "data": {
+                    "id": "0x1e8fb07ee44c4206df1fece978cb2bb16dd98cfcae1fb55d7adebf81d70e27f7",
+                    "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                    "quantity": "1",
+                    "properties": {
+                        "name": "Council of the Gods",
+                        "image_url": "https://card.godsunchained.com/?id=915\u0026q=4",
+                        "collection": {
+                            "name": "Gods Unchained",
+                            "icon_url": null
+                        }
+                    }
+                }
+            },
+            "buy": {
+                "type": "ETH",
+                "data": {
+                    "decimals": 18,
+                    "quantity": "87000000000000"
+                }
+            },
+            "amount_sold": "1",
+            "expiration_timestamp": "2021-05-18T21:00:00Z",
+            "timestamp": "2021-04-18T21:22:51.802571Z",
+            "updated_timestamp": "2021-04-20T00:05:56.317793Z"
         },
-        {'direction': 'Bluna to Luna', 'diff': '-3.5237%', 'ratio': 0.967763, 'spread': 2
+        {
+            "order_id": 123432,
+            "status": "filled",
+            "user": "0xe443ad699d30bfa69790767ddd86ff6f483f4d87",
+            "sell": {
+                "type": "ERC721",
+                "data": {
+                    "id": "0xda5eea0bd206b5244fcceb62d75c2e68bd90ce73f6c7b7ee3fb01cc7a5d3c3df",
+                    "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                    "quantity": "1",
+                    "properties": {
+                        "name": "Council of the Gods",
+                        "image_url": "https://card.godsunchained.com/?id=915\u0026q=4",
+                        "collection": {
+                            "name": "Gods Unchained",
+                            "icon_url": null
+                        }
+                    }
+                }
+            },
+            "buy": {
+                "type": "ETH",
+                "data": {
+                    "decimals": 18,
+                    "quantity": "87000000000000"
+                }
+            },
+            "amount_sold": "1",
+            "expiration_timestamp": "2021-05-18T21:00:00Z",
+            "timestamp": "2021-04-18T21:23:08.730278Z",
+            "updated_timestamp": "2021-04-20T00:06:08.70231Z"
+        },
+        {
+            "order_id": 123434,
+            "status": "filled",
+            "user": "0xe443ad699d30bfa69790767ddd86ff6f483f4d87",
+            "sell": {
+                "type": "ERC721",
+                "data": {
+                    "id": "0x0cc09f2280aab0a1790f2c31f949ad98e32e3354bac74aab01616ae99aff464f",
+                    "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                    "quantity": "1",
+                    "properties": {
+                        "name": "Council of the Gods",
+                        "image_url": "https://card.godsunchained.com/?id=915\u0026q=4",
+                        "collection": {
+                            "name": "Gods Unchained",
+                            "icon_url": null
+                        }
+                    }
+                }
+            },
+            "buy": {
+                "type": "ETH",
+                "data": {
+                    "decimals": 18,
+                    "quantity": "87000000000000"
+                }
+            },
+            "amount_sold": "1",
+            "expiration_timestamp": "2021-05-18T21:00:00Z",
+            "timestamp": "2021-04-18T21:23:26.853859Z",
+            "updated_timestamp": "2021-04-20T00:07:11.146438Z"
+        },
+        {
+            "order_id": 123436,
+            "status": "filled",
+            "user": "0xe443ad699d30bfa69790767ddd86ff6f483f4d87",
+            "sell": {
+                "type": "ERC721",
+                "data": {
+                    "id": "0x3cd9746955435e981082aa3d6c7ca69c3816464fd2c2591ffbfbc2a9c658c166",
+                    "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                    "quantity": "1",
+                    "properties": {
+                        "name": "Council of the Gods",
+                        "image_url": "https://card.godsunchained.com/?id=915\u0026q=4",
+                        "collection": {
+                            "name": "Gods Unchained",
+                            "icon_url": null
+                        }
+                    }
+                }
+            },
+            "buy": {
+                "type": "ETH",
+                "data": {
+                    "decimals": 18,
+                    "quantity": "87000000000000"
+                }
+            },
+            "amount_sold": "1",
+            "expiration_timestamp": "2021-05-18T21:00:00Z",
+            "timestamp": "2021-04-18T21:23:41.962562Z",
+            "updated_timestamp": "2021-04-20T00:06:07.392325Z"
+        },
+        {
+            "order_id": 123437,
+            "status": "filled",
+            "user": "0xe443ad699d30bfa69790767ddd86ff6f483f4d87",
+            "sell": {
+                "type": "ERC721",
+                "data": {
+                    "id": "0xb5f8fdd2ea85dedd6a72f67c859a5bf0b5a8fde8f00abdfc6047a8d455f1184e",
+                    "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                    "quantity": "1",
+                    "properties": {
+                        "name": "Council of the Gods",
+                        "image_url": "https://card.godsunchained.com/?id=915\u0026q=4",
+                        "collection": {
+                            "name": "Gods Unchained",
+                            "icon_url": null
+                        }
+                    }
+                }
+            },
+            "buy": {
+                "type": "ETH",
+                "data": {
+                    "decimals": 18,
+                    "quantity": "87000000000000"
+                }
+            },
+            "amount_sold": "1",
+            "expiration_timestamp": "2021-05-18T21:00:00Z",
+            "timestamp": "2021-04-18T21:23:57.178008Z",
+            "updated_timestamp": "2021-04-19T04:22:42.632691Z"
         }
-    ]
+    ],
+    "cursor": "eyJvcmRlcl9pZCI6MTIzNDM3LCJzZXFfbnVtIjowLCJzdGF0dXMiOiJmaWxsZWQiLCJzdGFya19rZXkiOiIweDA0OWEwZjliY2JiNzhlNzA3NmU0NjM1YTkyMDA4ZmJiMGU5ZDYzNmZlNjY0ZTA2YWQ0NzFkNThmYjhlYWM1YzgiLCJ2YXVsdF9pZCI6MCwiZXRoZXJfa2V5IjoiMHhlNDQzYWQ2OTlkMzBiZmE2OTc5MDc2N2RkZDg2ZmY2ZjQ4M2Y0ZDg3Iiwic2VsbF90b2tlbl90eXBlIjoiRVJDNzIxIiwic2VsbF90b2tlbl9pZCI6IjB4YjVmOGZkZDJlYTg1ZGVkZDZhNzJmNjdjODU5YTViZjBiNWE4ZmRlOGYwMGFiZGZjNjA0N2E4ZDQ1NWYxMTg0ZSIsInNlbGxfdG9rZW5fYWRkcmVzcyI6IjB4YWNiM2M2YTQzZDE1YjkwN2U4NDMzMDc3YjZkMzhhZTQwOTM2ZmUyYyIsInNlbGxfdG9rZW5fZGVjaW1hbHMiOjAsInNlbGxfcXVhbnRpdHkiOiIxIiwic2VsbF9hc3NldF9uYW1lIjoiQ291bmNpbCBvZiB0aGUgR29kcyIsInNlbGxfYXNzZXRfaW1hZ2VfdXJsIjoiaHR0cHM6Ly9jYXJkLmdvZHN1bmNoYWluZWQuY29tLz9pZD05MTVcdTAwMjZxPTQiLCJzZWxsX2NvbGxlY3Rpb25fbmFtZSI6IkdvZHMgVW5jaGFpbmVkIiwic2VsbF9jb2xsZWN0aW9uX2ljb25fdXJsIjpudWxsLCJidXlfdG9rZW5fdHlwZSI6IkVUSCIsImJ1eV90b2tlbl9pZCI6IiIsImJ1eV90b2tlbl9hZGRyZXNzIjoiIiwiYnV5X3Rva2VuX2RlY2ltYWxzIjoxOCwiYnV5X3F1YW50aXR5IjoiODcwMDAwMDAwMDAwMDAiLCJidXlfYXNzZXRfbmFtZSI6bnVsbCwiYnV5X2Fzc2V0X2ltYWdlX3VybCI6bnVsbCwiYnV5X2NvbGxlY3Rpb25fbmFtZSI6bnVsbCwiYnV5X2NvbGxlY3Rpb25faWNvbl91cmwiOm51bGwsImFtb3VudF9zb2xkIjoiMSIsImV4cGlyZWRfYXQiOiIyMDIxLTA1LTE4VDIxOjAwOjAwWiIsImNyZWF0ZWRfYXQiOiIyMDIxLTA0LTE4VDIxOjIzOjU3LjE3ODAwOFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wNC0xOVQwNDoyMjo0Mi42MzI2OTFaIn0",
+    "remaining": 513
 }

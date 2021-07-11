@@ -49,3 +49,13 @@ background-color: grey;
   font-size: 12px;
   margin-left:10px;
 `
+
+export const SpinnerWrapper = styled.div`
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:10%;
+  display:flex;
+  justify-content : center;
+`

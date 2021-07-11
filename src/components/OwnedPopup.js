@@ -5,6 +5,8 @@ import { Modal, Button, Spinner } from 'react-bootstrap';
 import { toEthPrice } from '../utils/getProtoCollection'
 import { sellAsset, fillOrder, getCheapestSellOrders } from '../utils/ImmutableXConnection.js'
 import { BuyButton, SellButton } from '../styles/GlobalStyle'
+import Chart from './Chart'
+import styled from 'styled-components';
 
 
 function OwnedPopup({ showPopup, setPopup, popupCard }) {
@@ -12,6 +14,16 @@ function OwnedPopup({ showPopup, setPopup, popupCard }) {
     const [sellPrice, setSellPrice] = useState(null)
     const [isLoading, setLoading] = useState(false);
     const [orders, setOrders] = useState([])
+
+    const Pcontainer = styled.div`
+    display:flex;
+    flex-direction:row;
+    justify-content : center;
+    align-items:center;
+    @media (max-width: 900px) {
+      flex-direction: column;
+    }
+  `
 
     async function fetchCheapestSellOrders() {
         setLoading(true)
@@ -67,7 +79,7 @@ function OwnedPopup({ showPopup, setPopup, popupCard }) {
 
     return (
         <>
-            <Modal show={showPopup} onHide={handleClose}>
+            <Modal show={showPopup} onHide={handleClose} dialogClassName="modal-80w">
                 <Modal.Header closeButton>
                     <Modal.Title>{popupCard.metadata.name}</Modal.Title>
                 </Modal.Header>
@@ -78,23 +90,25 @@ function OwnedPopup({ showPopup, setPopup, popupCard }) {
                         :
                         <div>
                             <p>Quality : {popupCard.metadata.quality}</p>
-                            <div className="container d-flex justify-content-center">
+                            <Pcontainer>
                                 <img src={popupCard.image_url} alt={popupCard.id}></img>
-                            </div>
+                                <Chart proto={popupCard.metadata.proto} quality={popupCard.metadata.quality} />
+                            </Pcontainer>
                             <p>For sale:
                                 {orders.map((order) => (
                                     <p><BuyButton value={order.order_id} onClick={handleBuy}>BUY</BuyButton> : {toEthPrice(order.buy.data.quantity)} </p>
                                 )
                                 )}</p>
-                        </div>}
-                </Modal.Body>
+                        </div>
+                    }
+                </Modal.Body >
                 <Modal.Footer>
                     <div className="container d-flex content-center">
                         <input type="text" name="ethprice" placeHolder="eth Price" onChange={handleChange} />
                         <SellButton onClick={handleSell}>Sell yours</SellButton>
                     </div>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
 
         </>
     );
