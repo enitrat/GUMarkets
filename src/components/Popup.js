@@ -2,8 +2,8 @@ import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Modal, Button, Spinner } from 'react-bootstrap';
-import { sellAsset, fillOrder, getOrdersHistory, getCheapestSellOrders, getPriceHistory } from '../utils/ImmutableXConnection.js'
-import { fetchBestPrice } from '../utils/getProtoCollection'
+import { sellAsset, fillOrder, getOrdersHistory, getCheapestSellOrders, getPriceHistory, toEthPrice } from '../utils/ImmutableXConnection.js'
+import { fetchBestPrice, getEthPrice } from '../utils/getProtoCollection'
 import { BuyButton, SellButton } from '../styles/GlobalStyle'
 import Chart from './Chart'
 import styled from 'styled-components';
@@ -18,6 +18,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
     const [quality, setQuality] = useState("Meteorite")
     const [error, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [ethPrice, setEthPrice] = useState(null);
 
     const Pcontainer = styled.div`
   display:flex;
@@ -37,6 +38,8 @@ function Popup({ showPopup, setPopup, popupCard }) {
             const { bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
             setPrice(bestOrder.minPrice)
             setOrderID(bestOrder.orderID)
+            const aPrice = await getEthPrice();
+            setEthPrice(aPrice);
             setImage(image_url)
             if (bestOrder.orderID === null) {
                 setError(true)
@@ -112,7 +115,7 @@ function Popup({ showPopup, setPopup, popupCard }) {
                         error ? <h5>this card is not available for trade</h5> :
                             <div>
                                 <p>Quality : {quality}</p>
-                                <p>Price : {price}</p>
+                                <p>Price : {price} ETH - {(price * ethPrice).toFixed(2)} USD</p>
                                 <Pcontainer>
                                     <img src={image} alt={popupCard.id}></img>
                                     <Chart proto={popupCard.id} quality={quality} />

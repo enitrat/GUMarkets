@@ -8,6 +8,26 @@ export const fetchProtoCollection = async () => {
 
 }
 
+export const getEthPrice = async () => {
+    let url = 'https://api.etherscan.io/api'
+    try {
+        const response = await Axios.get(url,
+            {
+                params:
+                {
+                    "module": "stats",
+                    "action": "ethprice",
+                    "apiKey": "BCRMVAXR1752VEW1PAQP64D4TH6YQHH6KM"
+
+                }
+            });
+        const result = response.data.result;
+        console.log(result)
+        return result.ethusd;
+    } catch (err) {
+        console.log(err)
+    }
+}
 export const fetchBestPrice = async (popupCard, quality) => {
     var bestOrder = {
         minPrice: Number.MAX_SAFE_INTEGER,
