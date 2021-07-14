@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/godsunchained/static/css/main.f6c1dd33.chunk.css",
-    "main.js": "/godsunchained/static/js/main.12bf4e7f.chunk.js",
-    "main.js.map": "/godsunchained/static/js/main.12bf4e7f.chunk.js.map",
+    "main.js": "/godsunchained/static/js/main.b73e237c.chunk.js",
+    "main.js.map": "/godsunchained/static/js/main.b73e237c.chunk.js.map",
     "runtime-main.js": "/godsunchained/static/js/runtime-main.da01c1c9.js",
     "runtime-main.js.map": "/godsunchained/static/js/runtime-main.da01c1c9.js.map",
     "static/css/2.081f420c.chunk.css": "/godsunchained/static/css/2.081f420c.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.081f420c.chunk.css",
     "static/js/2.8f0392db.chunk.js",
     "static/css/main.f6c1dd33.chunk.css",
-    "static/js/main.12bf4e7f.chunk.js"
+    "static/js/main.b73e237c.chunk.js"
   ]
 }
