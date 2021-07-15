@@ -8,7 +8,33 @@ export const fetchProtoCollection = async () => {
 
 }
 
+export const fetchDiscounts = async () => {
+    let url = 'http://78.196.200.108:5000/discounts'
+    const response = await Axios(url)
+    const result = response.data
+    return result;
+
+}
+
+export const getEthPrice = async () => {
+    let url = 'https://min-api.cryptocompare.com/data/price'
+    try {
+        const response = await Axios.get(url,
+            {
+                params:
+                {
+                    "fsym": "ETH",
+                    "tsyms": "USD",
+                }
+            });
+        const result = response.data;
+        return result.USD;
+    } catch (err) {
+        console.log(err)
+    }
+}
 export const fetchBestPrice = async (popupCard, quality) => {
+    var result = null
     var bestOrder = {
         minPrice: Number.MAX_SAFE_INTEGER,
         orderID: null
@@ -32,8 +58,7 @@ export const fetchBestPrice = async (popupCard, quality) => {
 
                 }
             })
-        const result = response.data.result
-        console.log(result)
+        result = response.data.result
         result.map((order) => {
 
             let quantity = order.buy.data.quantity
@@ -47,13 +72,13 @@ export const fetchBestPrice = async (popupCard, quality) => {
         })
 
         var image_url = result[0].sell.data.properties.image_url;
-        console.log(bestOrder)
 
     } catch (err) {
         console.log(err)
     }
     finally {
         return {
+            result,
             bestOrder,
             image_url
         };

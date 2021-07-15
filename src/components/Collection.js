@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react'
 import Item from './Item'
 import '../styles/Collection.css'
-import { fetchProtoCollection } from '../utils/getProtoCollection'
 import { Spinner } from 'react-bootstrap'
 
-function Collection({ showPopup, setPopup, popupCard, setPopupCard }) {
+function Collection({ showPopup, setPopup, popupCard, setPopupCard, loadCollection }) {
     const [allCards, setAllCards] = useState([])
     const [cards, setCards] = useState([])
     const [isLoading, setLoading] = useState(false);
 
     async function initPage() {
         setLoading(true)
-        const assets = await fetchProtoCollection();
+        const assets = await loadCollection();
         console.log(assets)
         setCards(assets)
         setAllCards(assets)

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import Collection from "../components/Collection"
 import Popup from '../components/Popup'
-import { fetchProtoCollection } from '../utils/getProtoCollection'
+import { fetchDiscounts } from '../utils/getProtoCollection'
 
-function Home() {
+function Discounts() {
 
     const [showPopup, setPopup] = useState(false);
     const [popupCard, setPopupCard] = useState(null)
@@ -12,7 +12,7 @@ function Home() {
 
     return (
         <div className="container">
-            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} loadCollection={fetchProtoCollection} />
+            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} loadCollection={fetchDiscounts} />
             {showPopup ?
                 <Popup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
                 : null}
@@ -21,4 +21,4 @@ function Home() {
     )
 }
 
-export default Home
+export default Discounts

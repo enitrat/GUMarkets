@@ -216,6 +216,7 @@ export async function getPriceHistory(metadata) {
             if (map.has(f_time)) {
                 const res = map.get(f_time);
                 price = (+res.price + +toEthPrice(order.buy.data.quantity))
+                price /= 2
                 volume = res.volume
             }
             else {
