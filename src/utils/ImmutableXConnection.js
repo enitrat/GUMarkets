@@ -215,7 +215,8 @@ export async function getPriceHistory(metadata) {
             let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
             if (map.has(f_time)) {
                 const res = map.get(f_time);
-                price = (+res.price + +toEthPrice(order.buy.data.quantity) / 2)
+                price = (+res.price + +toEthPrice(order.buy.data.quantity))
+                price /= 2
                 volume = res.volume
             }
             else {

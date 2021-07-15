@@ -19,6 +19,8 @@ function Popup({ showPopup, setPopup, popupCard }) {
     const [error, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [ethPrice, setEthPrice] = useState(null);
+    const [orders, setOrders] = useState([])
+
 
     const Pcontainer = styled.div`
   display:flex;
@@ -30,12 +32,16 @@ function Popup({ showPopup, setPopup, popupCard }) {
   }
 `
 
+
+
     async function init() {
         setLoading(true)
         try {
             setError(false)
             //get best price for this card
-            const { bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
+            const { result, bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
+            console.log(result, bestOrder, image_url)
+            setOrders(result.slice(0, 5))
             setPrice(bestOrder.minPrice)
             setOrderID(bestOrder.orderID)
             const aPrice = await getEthPrice();
@@ -74,7 +80,6 @@ function Popup({ showPopup, setPopup, popupCard }) {
     }
     const handleShadow = () => {
         setQuality("Shadow")
-        console.log("Shadow")
 
     }
     const handleGold = () => {
@@ -90,10 +95,10 @@ function Popup({ showPopup, setPopup, popupCard }) {
         sellAsset('0x843279e9ee4e64ff7a4d8743df80e5a914ff8053ee40a15b6d7b6a5b195e8375', '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c', 0.01)
     }
 
-    async function handleBuy() {
+
+    async function handleBuy(e) {
         try {
-            console.log(orderID.toString());
-            await fillOrder(orderID.toString());
+            await fillOrder(e.target.value);
         }
         catch (err) {
             console.log(err);
@@ -121,7 +126,15 @@ function Popup({ showPopup, setPopup, popupCard }) {
                                     <Chart proto={popupCard.id} quality={quality} />
                                 </Pcontainer>
                                 <div className="d-flex justify-content-center">
-                                    <BuyButton onClick={handleBuy}>Buy</BuyButton>
+                                    <p>For sale:
+                                        {orders.map((order) => {
+                                            const order_ethprice = toEthPrice(order.buy.data.quantity)
+                                            const order_usdprice = (order_ethprice * ethPrice).toFixed(2)
+                                            return (
+                                                <p><BuyButton value={order.order_id} onClick={handleBuy}>{order_usdprice} USD </BuyButton> : {order_ethprice} ETH</p>
+                                            )
+                                        }
+                                        )}</p>
                                 </div>
                             </div>
 
