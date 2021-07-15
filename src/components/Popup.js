@@ -2,68 +2,62 @@ import '../styles/Popup.css'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Modal, Button, Spinner } from 'react-bootstrap';
+import { sellAsset, fillOrder, getOrdersHistory, getCheapestSellOrders, getPriceHistory } from '../utils/ImmutableXConnection.js'
+import { fetchBestPrice } from '../utils/getProtoCollection'
+import { BuyButton, SellButton } from '../styles/GlobalStyle'
+import Chart from './Chart'
+import styled from 'styled-components';
+
+
 
 function Popup({ showPopup, setPopup, popupCard }) {
 
     const [price, setPrice] = useState(null);
+    const [orderID, setOrderID] = useState(null);
     const [image, setImage] = useState(null);
-    const [quality, setQuality] = useState(popupCard.metadata.quality)
+    const [quality, setQuality] = useState("Meteorite")
     const [error, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
-    var minPrice = Number.MAX_SAFE_INTEGER
+    const Pcontainer = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content : center;
+  align-items:center;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`
 
-    const fetchPrice = async () => {
+    async function init() {
         setLoading(true)
-        let url = 'https://api.x.immutable.com/v1/orders'
-        const json = JSON.stringify(
-            {
-                "proto": [`${popupCard.metadata.proto}`],
-                "quality": [`${quality}`]
-            }
-        );
         try {
-            const response = await Axios.get(url,
-                {
-                    params:
-                    {
-                        sell_metadata: json,
-                        status: 'active',
-                        order_by: 'buy_quantity',
-                        direction: 'asc',
-
-                    }
-                })
-            const result = response.data.result
-            console.log(result)
-            result.map((order) => {
-
-                let quantity = order.buy.data.quantity
-                let decimals = order.buy.data.decimals
-                let currentPrice = (quantity * Math.pow(10, -decimals)).toFixed(6)
-                minPrice = minPrice > currentPrice ? currentPrice : minPrice
-            })
-
-            const image_url = result[0].sell.data.properties.image_url;
-
-            setPrice(minPrice)
+            setError(false)
+            //get best price for this card
+            const { bestOrder, image_url } = await fetchBestPrice(popupCard, quality);
+            setPrice(bestOrder.minPrice)
+            setOrderID(bestOrder.orderID)
             setImage(image_url)
+            if (bestOrder.orderID === null) {
+                setError(true)
+            }
+
         } catch (err) {
             setError(true);
-            console.log("erreur")
+            console.log(err)
         }
         finally {
             setLoading(false)
         }
-
     }
 
+
     useEffect(() => {
-        fetchPrice();
+        init(popupCard, quality);
     }, [])
 
     useEffect(() => {
-        fetchPrice();
+        init(popupCard, quality);
     }, [quality])
 
     const handleClose = () => {
@@ -89,10 +83,24 @@ function Popup({ showPopup, setPopup, popupCard }) {
         setQuality("Diamond")
     }
 
+    const handleSell = () => {
+        sellAsset('0x843279e9ee4e64ff7a4d8743df80e5a914ff8053ee40a15b6d7b6a5b195e8375', '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c', 0.01)
+    }
+
+    async function handleBuy() {
+        try {
+            console.log(orderID.toString());
+            await fillOrder(orderID.toString());
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
 
-            <Modal show={showPopup} onHide={handleClose}>
+            <Modal show={showPopup} onHide={handleClose} dialogClassName="modal-80w">
                 <Modal.Header closeButton>
                     <Modal.Title>{popupCard.name}</Modal.Title>
                 </Modal.Header>
@@ -101,13 +109,21 @@ function Popup({ showPopup, setPopup, popupCard }) {
                         <div className="container d-flex justify-content-center">
                             <Spinner animation="grow" /> </div>
                         :
-                        <div>
-                            <p>Quality : {quality}</p>
-                            <p>Price : {price}</p>
-                            <div className="container d-flex justify-content-center">
-                                <img src={image} alt={popupCard.metadata.proto}></img>
+                        error ? <h5>this card is not available for trade</h5> :
+                            <div>
+                                <p>Quality : {quality}</p>
+                                <p>Price : {price}</p>
+                                <Pcontainer>
+                                    <img src={image} alt={popupCard.id}></img>
+                                    <Chart proto={popupCard.id} quality={quality} />
+                                </Pcontainer>
+                                <div className="d-flex justify-content-center">
+                                    <BuyButton onClick={handleBuy}>Buy</BuyButton>
+                                </div>
                             </div>
-                        </div>}
+
+                    }
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleMeteorite}>

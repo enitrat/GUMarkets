@@ -1,7 +1,9 @@
+
 import { ImageWrapper } from '../styles/GlobalStyle'
 
 
-function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
+function OwnedCard({ card, showPopup, setPopup, popupCard, setPopupCard }) {
+
 
 
     const handleClick = () => {
@@ -10,10 +12,10 @@ function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
     }
 
     return (
-        <div>
+        <div className="lol">
             <li key={card.id}>
                 <ImageWrapper>
-                    <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${card.id}&q=4`} alt={`${card.id} cover`} onClick={handleClick} />
+                    <img className='nft-item-cover' src={card.image_url} alt={`${card.id} cover`} onClick={handleClick} />
                 </ImageWrapper>
             </li>
 
@@ -21,4 +23,4 @@ function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
     )
 }
 
-export default Item
+export default OwnedCard
