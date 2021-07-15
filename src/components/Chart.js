@@ -10,7 +10,9 @@ import {
     Legend,
     Scatter,
     ResponsiveContainer,
+    Label,
 } from 'recharts';
+import { getEthPrice } from '../utils/getProtoCollection.js';
 import { getPriceHistory } from '../utils/ImmutableXConnection.js'
 import { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
@@ -29,7 +31,12 @@ function Chart({ proto, quality }) {
                 "quality": [`${quality}`]
             }
         );
+        const ethprice = await getEthPrice()
+
         const hprices = await getPriceHistory(json)
+        hprices.forEach((elem) => (
+            elem.data.price = +(elem.data.price * ethprice).toFixed(2)
+        ))
         console.log(hprices)
         setHistory(hprices)
         setLoading(false)
@@ -59,8 +66,16 @@ function Chart({ proto, quality }) {
                     >
                         <CartesianGrid stroke="#f5f5f5" />
                         <XAxis dataKey="time" />
-                        <YAxis yAxisId="left" />
-                        <YAxis yAxisId="right" orientation="right" domain={[0, dataMax => (dataMax * 5)]} />
+                        <YAxis yAxisId="left" dataKey="data.price">
+                            <Label angle={270} position='left' style={{ textAnchor: 'middle' }}>
+                                USD price
+                            </Label>
+                        </YAxis>
+                        <YAxis yAxisId="right" dataKey="data.volume" orientation="right" domain={[0, dataMax => (dataMax * 5)]}>
+                            <Label angle={90} position='right' style={{ textAnchor: 'middle' }}>
+                                Volume
+                            </Label>
+                        </YAxis>
                         <Tooltip />
                         <Legend />
                         <Line yAxisId="left" type="monotone" dataKey="data.price" stroke="#8884d8" />

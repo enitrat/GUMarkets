@@ -9,7 +9,7 @@ export const fetchProtoCollection = async () => {
 }
 
 export const fetchDiscounts = async () => {
-    let url = 'http://localhost:5000/discounts'
+    let url = 'http://78.196.200.108:5000/discounts'
     const response = await Axios(url)
     const result = response.data
     return result;
