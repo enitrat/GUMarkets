@@ -1,4 +1,4 @@
-# GUMarket
+# GUMarkets
 
 A Gods Unchained marketplace focused on finding best deals.
 
