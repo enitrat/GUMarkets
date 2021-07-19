@@ -1,8 +1,9 @@
 {
-  "homepage": "http://M47Hs.github.io/godsunchained",
-  "name": "godsunchained",
+  "homepage": "http://M47Hs.github.io/gumarkets",
+  "name": "gumarkets",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@imtbl/imx-link-lib": "^1.0.152",
     "@imtbl/imx-link-sdk": "^1.0.142",

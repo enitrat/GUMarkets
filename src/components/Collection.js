@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react'
 import Item from './Item'
 import '../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
+import { getAllProtos } from '../utils/apiCalls'
 
-function Collection({ showPopup, setPopup, popupCard, setPopupCard, loadCollection }) {
-    const [allCards, setAllCards] = useState([])
-    const [cards, setCards] = useState([])
+function Collection({ showPopup, setPopup }) {
+    const [allProtos, setAllProtos] = useState([])
+    const [protos, setProtos] = useState([])
     const [isLoading, setLoading] = useState(false);
 
     async function initPage() {
         setLoading(true)
-        const assets = await loadCollection();
-        console.log(assets)
-        setCards(assets)
-        setAllCards(assets)
+        const myProtos = await getAllProtos();
+        setAllProtos(myProtos)
+        setProtos(myProtos)
         setLoading(false)
     }
 
@@ -22,12 +22,16 @@ function Collection({ showPopup, setPopup, popupCard, setPopupCard, loadCollecti
     }, [])
 
     useEffect(() => {
-        console.log(cards)
-    }, [cards])
+        console.log(protos)
+    }, [protos])
 
     const handleInput = (e) => {
-        const filteredResult = allCards.filter((card) => card.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        setCards(filteredResult)
+        const filteredResult = allProtos.filter((proto) => {
+            let metadata = JSON.parse(proto.metadata)
+            return metadata.name.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+
+        setProtos(filteredResult)
     }
 
 
@@ -35,16 +39,16 @@ function Collection({ showPopup, setPopup, popupCard, setPopupCard, loadCollecti
     return (
         <>
             <div className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a card" onChange={handleInput} />
+                <input type="text" placeholder="Search a proto" onChange={handleInput} />
             </div>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">
                     <div className="row">
-                        {cards.map((card) => (
+                        {protos.map((proto) => (
 
-                            <Item key={card.id} card={card} showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />)
-                        )}
+                            <img src={`https://card.godsunchained.com/?id=${proto.token_proto.split('-')[0]}&q=${proto.token_proto.split('-')[1]}`} alt="lol" />
+                        ))}
                     </div>
                 </ul>
             }
