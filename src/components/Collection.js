@@ -47,7 +47,7 @@ function Collection({ showPopup, setPopup }) {
                     <div className="row">
                         {protos.map((proto) => (
 
-                            <img src={`https://card.godsunchained.com/?id=${proto.token_proto.split('-')[0]}&q=${proto.token_proto.split('-')[1]}`} alt="lol" />
+                            <Item key={`${proto.token_proto}`} proto={proto}></Item>
                         ))}
                     </div>
                 </ul>

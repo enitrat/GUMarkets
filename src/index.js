@@ -7,6 +7,7 @@ import Account from './pages/Account'
 import Header from './components/Header'
 import Discounts from './pages/Discounts'
 import Browse from './pages/Browse'
+import Details from './pages/Details'
 import { LoggedProvider } from './utils/context'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,6 +27,9 @@ ReactDOM.render(
 				</Route>
 				<Route path="/discounts">
 					<Discounts />
+				</Route>
+				<Route path="/protos/:id">
+					<Details />
 				</Route>
 			</LoggedProvider>
 		</Router>

@@ -1,19 +1,21 @@
 import { ImageWrapper } from '../styles/GlobalStyle'
+import { Link } from 'react-router-dom'
 
 
-function Item({ card, showPopup, setPopup, popupCard, setPopupCard }) {
+function Item({ proto }) {
 
 
     const handleClick = () => {
-        setPopup(!showPopup)
-        setPopupCard(card)
+
     }
 
     return (
         <div>
-            <li key={card.id}>
+            <li key={proto.token_proto}>
                 <ImageWrapper>
-                    <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${card.id}&q=4`} alt={`${card.id} cover`} onClick={handleClick} />
+                    <Link to={`/protos/${proto.token_proto}`}>
+                        <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${proto.token_proto.split('-')[0]}&q=${proto.token_proto.split('-')[1]}`} alt={`${proto.token_proto} cover`} onClick={handleClick} />
+                    </Link>
                 </ImageWrapper>
             </li>
 

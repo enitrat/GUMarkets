@@ -18,7 +18,7 @@ function Header() {
 `
     const StyledLink = styled(Link)`
   padding: 10px 15px;
-  color: #8186a0;
+  color: #c4fffc;
   text-decoration: none;
   font-size: 18px;
   text-align: center;
@@ -63,7 +63,7 @@ function Header() {
 
 
     return (
-        <div className=" jumbotron d-flex headerWrapper">
+        <div className="d-flex headerWrapper">
             <div className="d-flex">
                 <img src={Logo} className="mainLogo" alt="mainLogo" />
             </div>
