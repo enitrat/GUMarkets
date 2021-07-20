@@ -16,19 +16,19 @@ ReactDOM.render(
 		<Router>
 			<LoggedProvider>
 				<Header />
-				<Route exact path="/">
-					<Redirect to="/browse" />
+				<Route exact path="/godsunchained">
+					<Redirect to="/godsunchained/browse" />
 				</Route>
-				<Route path="/browse">
+				<Route path="/godsunchained/browse">
 					<Browse />
 				</Route>
-				<Route path="/account">
+				<Route path="/godsunchained/account">
 					<Account />
 				</Route>
-				<Route path="/discounts">
+				<Route path="/godsunchained/discounts">
 					<Discounts />
 				</Route>
-				<Route path="/protos/:id">
+				<Route path="/godsunchained/protos/:id">
 					<Details />
 				</Route>
 			</LoggedProvider>

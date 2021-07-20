@@ -126,9 +126,9 @@ export async function getLastTrades(metadata) {
         sell_token_address: '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
         sell_metadata: metadata,
         order_by: 'timestamp',
-        direction: 'asc'
+        direction: 'desc'
     });
-    ordersRequest.result.sort((a, b) => (a.updated_timestamp.localeCompare(b.updated_timestamp)));
+    ordersRequest.result.sort((b, a) => (a.updated_timestamp.localeCompare(b.updated_timestamp)));
     return ordersRequest.result.slice(0, 5);
 
 }

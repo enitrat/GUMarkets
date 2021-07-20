@@ -62,8 +62,7 @@ function Details() {
                     "quality": [`${getQuality(quality)}`]
                 }
             );
-            const { orders } = await getCheapestUSDSellOrders(json)
-            console.log(orders)
+            let { orders } = await getCheapestUSDSellOrders(json)
             setPrice(orders[0].buy.data.quantity)
             if (orders[0].orderID === null) {
                 setError(true)
