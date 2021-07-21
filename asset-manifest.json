@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/godsunchained/static/css/main.c323221d.chunk.css",
-    "main.js": "/godsunchained/static/js/main.681159c0.chunk.js",
-    "main.js.map": "/godsunchained/static/js/main.681159c0.chunk.js.map",
+    "main.js": "/godsunchained/static/js/main.f5344276.chunk.js",
+    "main.js.map": "/godsunchained/static/js/main.f5344276.chunk.js.map",
     "runtime-main.js": "/godsunchained/static/js/runtime-main.da01c1c9.js",
     "runtime-main.js.map": "/godsunchained/static/js/runtime-main.da01c1c9.js.map",
     "static/css/2.081f420c.chunk.css": "/godsunchained/static/css/2.081f420c.chunk.css",
-    "static/js/2.531ca391.chunk.js": "/godsunchained/static/js/2.531ca391.chunk.js",
-    "static/js/2.531ca391.chunk.js.map": "/godsunchained/static/js/2.531ca391.chunk.js.map",
+    "static/js/2.08a1514e.chunk.js": "/godsunchained/static/js/2.08a1514e.chunk.js",
+    "static/js/2.08a1514e.chunk.js.map": "/godsunchained/static/js/2.08a1514e.chunk.js.map",
     "index.html": "/godsunchained/index.html",
     "static/css/2.081f420c.chunk.css.map": "/godsunchained/static/css/2.081f420c.chunk.css.map",
     "static/css/main.c323221d.chunk.css.map": "/godsunchained/static/css/main.c323221d.chunk.css.map",
-    "static/js/2.531ca391.chunk.js.LICENSE.txt": "/godsunchained/static/js/2.531ca391.chunk.js.LICENSE.txt",
+    "static/js/2.08a1514e.chunk.js.LICENSE.txt": "/godsunchained/static/js/2.08a1514e.chunk.js.LICENSE.txt",
     "static/media/logo.aac3612d.png": "/godsunchained/static/media/logo.aac3612d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.da01c1c9.js",
     "static/css/2.081f420c.chunk.css",
-    "static/js/2.531ca391.chunk.js",
+    "static/js/2.08a1514e.chunk.js",
     "static/css/main.c323221d.chunk.css",
-    "static/js/main.681159c0.chunk.js"
+    "static/js/main.f5344276.chunk.js"
   ]
 }
