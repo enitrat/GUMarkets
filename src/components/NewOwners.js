@@ -29,7 +29,7 @@ function NewOwners({ proto, quality }) {
         <div>
             <ul>
                 {trades.map((trade) => (
-                    <li>owner : {trade.owner}, price:{trade.price}, NFT_id : {trade.tokenID}</li>
+                    <li>owner : {trade.owner}, price:{trade.price}, NFT_id : {trade.tokenID}, temps en seconde : {trade.uptime}</li>
                 ))
                 }
             </ul>

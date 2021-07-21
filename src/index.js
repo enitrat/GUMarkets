@@ -8,6 +8,8 @@ import Header from './components/Header'
 import Discounts from './pages/Discounts'
 import Browse from './pages/Browse'
 import Details from './pages/Details'
+import User from './pages/User'
+
 import { LoggedProvider } from './utils/context'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -30,6 +32,9 @@ ReactDOM.render(
 				</Route>
 				<Route path="/godsunchained/protos/:id">
 					<Details />
+				</Route>
+				<Route path="/godsunchained/user/:id">
+					<User />
 				</Route>
 			</LoggedProvider>
 		</Router>

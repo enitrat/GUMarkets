@@ -10,16 +10,6 @@ const apiAddress = 'https://api.x.immutable.com/v1';
 const COLLECTION_ADDRESS = '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c';
 
 
-var getUrlParams = function (url) {
-    var params = {};
-    (url + '?').split('?')[1].split('&').forEach(function (pair) {
-        pair = (pair + '=').split('=').map(decodeURIComponent);
-        if (pair[0].length) {
-            params[pair[0]] = pair[1];
-        }
-    });
-    return params;
-};
 
 /**
  * 
@@ -196,7 +186,7 @@ export async function getLastTradesData(metadata) {
             let tokenID = trade.sell.data.id;
             let owner = await getAssetInfo(tokenID)
             let price = (trade.buy.data.quantity * Math.pow(10, -18) * ethPrice).toFixed(2)
-            datas = datas.concat({ tokenID: tokenID, owner: owner, price: price })
+            datas = datas.concat({ tokenID: tokenID, owner: owner, price: price, uptime: (Date.parse(trade.updated_timestamp) - Date.parse(trade.timestamp)) / 1000 })
         }
 
         return datas;
