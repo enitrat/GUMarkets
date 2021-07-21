@@ -199,6 +199,12 @@ export async function getOrdersHistory(metadata, min_date) {
 
 }
 
+/**
+ * 
+ * @param {*} metadata 
+ * @param {*} min_date 
+ * @returns liste contenant pour chaque jour le prix moyen et le volume total
+ */
 export async function getPriceHistory(metadata, min_date) {
     let h_prices = [];
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

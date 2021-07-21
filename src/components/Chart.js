@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import { getEthPrice } from '../utils/getProtoCollection.js';
 import { getPriceHistory } from '../utils/ImmutableXConnection.js'
-import { getAllOrdersHistory } from '../utils/apiCalls.js';
+import { getAllOrdersHistory, getAvgDailyPrice } from '../utils/apiCalls.js';
 import { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
 import { SpinnerWrapper } from '../styles/GlobalStyle'
@@ -36,7 +36,7 @@ function Chart({ proto, quality, type }) {
         const ethprice = await getEthPrice()
 
         if (type === "month-avg") {
-            const hprices = await getPriceHistory(json, min_date)
+            const hprices = await getAvgDailyPrice(json, min_date)
             hprices.forEach((elem) => (
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
             ))

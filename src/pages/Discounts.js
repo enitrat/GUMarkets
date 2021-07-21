@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Collection from "../components/Collection"
+import DiscountsCollection from "../components/Discounts/DiscountsCollection"
 import Popup from '../components/Popup'
 import { fetchDiscounts } from '../utils/getProtoCollection'
 
@@ -12,7 +12,7 @@ function Discounts() {
 
     return (
         <div className="container">
-            <Collection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} loadCollection={fetchDiscounts} />
+            <DiscountsCollection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />
             {showPopup ?
                 <Popup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
                 : null}

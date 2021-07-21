@@ -8,6 +8,9 @@ import { BuyButton } from '../styles/GlobalStyle'
 import { fillOrder } from '../utils/ImmutableXConnection'
 import '../styles/details.css'
 import NewOwners from "../components/NewOwners";
+import GeneralTab from '../components/Details/GeneralTab'
+import DetailedTab from '../components/Details/DetailedTab'
+
 
 
 
@@ -82,14 +85,7 @@ function Details() {
         init();
     }, [])
 
-    async function handleBuy(e) {
-        try {
-            await fillOrder(e.target.value);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
+
 
     return (
         <div>
@@ -120,40 +116,14 @@ function Details() {
                             <div
                                 className={toggleState === 1 ? "content  active-content" : "content"}
                             >
-                                <Pcontainer>
-                                    <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${proto}&q=${quality}`} alt={`${id} cover`} />
-                                    <Chart proto={proto} quality={getQuality(quality)} type={"month-avg"} />
+                                <GeneralTab proto={proto} quality={quality} id={id} orders={orders} price={price} getQuality={getQuality} />
 
-                                </Pcontainer>
-                                <div className="d-flex justify-content-center">
-                                    <p>For sale:
-                                        {orders.map((order) => {
-                                            return (
-                                                <p><BuyButton value={order.order_id} onClick={handleBuy}>{price} USD </BuyButton></p>
-                                            )
-                                        }
-                                        )}</p>
-                                </div>
                             </div>
                             <div
                                 className={toggleState === 2 ? "content  active-content" : "content"}
                             >
-                                <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${proto}&q=${quality}`} alt={`${id} cover`} />
+                                <DetailedTab proto={proto} quality={quality} id={id} orders={orders} price={price} getQuality={getQuality} />
 
-                                <Pcontainer>
-                                    <Chart proto={proto} quality={getQuality(quality)} type={"month-detailed"} />
-
-                                </Pcontainer>
-                                <Pcontainer>
-                                    <Chart proto={proto} quality={getQuality(quality)} type={"week-detailed"} />
-
-                                </Pcontainer>
-
-                                <div className="last trades">
-                                    Last trades :
-                                    <NewOwners proto={proto} quality={getQuality(quality)} />
-
-                                </div>
                             </div>
                         </div>
                     </div>
