@@ -8,13 +8,7 @@ export const fetchProtoCollection = async () => {
 
 }
 
-export const fetchDiscounts = async () => {
-    let url = 'https://gumarkets.freeboxos.fr:5000/discounts'
-    const response = await Axios(url)
-    const result = response.data
-    return result;
 
-}
 
 export const getEthPrice = async () => {
     let url = 'https://min-api.cryptocompare.com/data/price'
