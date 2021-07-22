@@ -8,7 +8,6 @@ const useWalletData = (assets) => {
     const [values, setValues] = useState(0);
     const [roi, setRoi] = useState(0);
     const [isLoading, setLoading] = useState(false);
-    console.log(assets)
 
 
 
@@ -21,10 +20,11 @@ const useWalletData = (assets) => {
         var sumDiff = 0;
 
         assets.forEach((asset) => {
-            sumBuyPrice += +asset.buyPrice;
-            sumValues += +asset.actualPrice;
-            sumDiff += +asset.diffPrice;
-            console.log(typeof (sumDiff), sumDiff)
+            if (asset.buyPrice && asset.actualPrice && asset.diffPrice !== undefined) {
+                sumBuyPrice += +asset.buyPrice;
+                sumValues += +asset.actualPrice;
+                sumDiff += +asset.diffPrice;
+            }
         });
 
         setInvestment(sumBuyPrice)
