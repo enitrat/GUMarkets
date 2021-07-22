@@ -1,5 +1,6 @@
 {
-  "name": "deploy",
+  "homepage": ".",
+  "name": "godsunchained",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
