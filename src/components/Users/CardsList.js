@@ -6,16 +6,27 @@ import '../../styles/Collection.css'
 
 function CardsList({ address }) {
 
-    const { data: allCards } = useGetNFTs(address);
-    const [cards, setCards] = useState(allCards)
+    const { data: allCards, allPrices: allPrices } = useGetNFTs(address);
+
+    const [searchParam, setSearchParam] = useState("");
+
+
+
+    const handleInput = (e) => {
+        setSearchParam(e.target.value.toLowerCase())
+    }
+
+
 
     return (
         <div>
-
+            <div className="container d-flex justify-content-center">
+                <input type="text" placeholder="Search a proto" onChange={handleInput} />
+            </div>
             <ul className="list-unstyled">
                 <div className="row">
                     {allCards.map((data) => (
-                        <Card id={data.id} />
+                        data.metadata.name.toLowerCase().includes(searchParam) && <Card data={data} allPrices={allPrices} />
                     )
                     )}
                 </div>

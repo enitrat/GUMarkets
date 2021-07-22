@@ -6,14 +6,14 @@ import { getAllProtos } from '../utils/apiCalls'
 
 function Collection({ showPopup, setPopup }) {
     const [allProtos, setAllProtos] = useState([])
-    const [protos, setProtos] = useState([])
     const [isLoading, setLoading] = useState(false);
+    const [searchParam, setSearchParam] = useState("");
+
 
     async function initPage() {
         setLoading(true)
         const myProtos = await getAllProtos();
         setAllProtos(myProtos)
-        setProtos(myProtos)
         setLoading(false)
     }
 
@@ -21,20 +21,10 @@ function Collection({ showPopup, setPopup }) {
         initPage();
     }, [])
 
-    useEffect(() => {
-        console.log(protos)
-    }, [protos])
 
     const handleInput = (e) => {
-        const filteredResult = allProtos.filter((proto) => {
-            let metadata = JSON.parse(proto.metadata)
-            return metadata.name.toLowerCase().includes(e.target.value.toLowerCase())
-        })
-
-        setProtos(filteredResult)
+        setSearchParam(e.target.value.toLowerCase())
     }
-
-
 
     return (
         <>
@@ -45,9 +35,9 @@ function Collection({ showPopup, setPopup }) {
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">
                     <div className="row">
-                        {protos.map((proto) => (
+                        {allProtos.map((proto) => (
 
-                            <Item key={`${proto.token_proto}`} proto={proto}></Item>
+                            JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto}></Item>
                         ))}
                     </div>
                 </ul>

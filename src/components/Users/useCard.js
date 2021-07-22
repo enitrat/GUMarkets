@@ -3,7 +3,7 @@ import axios from "axios";
 import { getEthPrice } from '../../utils/apiCalls'
 import { getCheapestUSDSellOrders } from '../../utils/apiCalls';
 
-const useCard = (id) => {
+const useCard = (data) => {
 
     const [buyPrice, setBuyPrice] = useState([]);
     const [proto, setProto] = useState(null)
@@ -23,12 +23,13 @@ const useCard = (id) => {
         const getBuyPrice = async () => {
 
             try {
-                const ethPrice = await getEthPrice();
+                const ethPrice = localStorage.getItem('ethPrice');
+
                 let config = {
                     params: {
                         'page_size': 20,
                         'buy_token_address': '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
-                        'buy_token_id': id,
+                        'buy_token_id': data.id,
                         'order_by': 'timestamp',
                         'direction': 'desc'
                     },
@@ -40,7 +41,7 @@ const useCard = (id) => {
                 setProto(proto)
                 const price = (result * Math.pow(10, -18) * ethPrice).toFixed(2)
                 setBuyPrice(price);
-                getActualPrice();
+                //getActualPrice();
 
             } catch (err) {
                 setBuyPrice(undefined)
@@ -48,28 +49,28 @@ const useCard = (id) => {
             }
         };
 
-        const getActualPrice = async () => {
-            try {
-                //get best price for this card
-                const json = JSON.stringify(
-                    {
-                        "proto": [`${proto.split('-')[0]}`],
-                        "quality": [`${getQuality(proto.split('-')[1])}`]
-                    }
-                );
-                let { orders } = await getCheapestUSDSellOrders(json)
-                console.log(orders[0].buy.data.quantity)
-                setActualPrice(orders[0].buy.data.quantity)
+        // const getActualPrice = async () => {
+        //     try {
+        //         //get best price for this card
+        //         const json = JSON.stringify(
+        //             {
+        //                 "proto": [`${proto.split('-')[0]}`],
+        //                 "quality": [`${getQuality(proto.split('-')[1])}`]
+        //             }
+        //         );
+        //         let { orders } = await getCheapestUSDSellOrders(json)
+        //         console.log(orders[0].buy.data.quantity)
+        //         setActualPrice(orders[0].buy.data.quantity)
 
-            } catch (err) {
-                console.log(err)
-            }
-        }
+        //     } catch (err) {
+        //         console.log(err)
+        //     }
+        // }
 
         getBuyPrice();
     }, []);
 
-    return { buyPrice: buyPrice, proto: { token_proto: proto }, actualPrice: actualPrice }
+    return { buyPrice: buyPrice, proto: { token_proto: proto }, /*actualPrice: actualPrice*/ }
 }
 
 export default useCard
