@@ -165,13 +165,11 @@ export async function getCheapestSellOrders(pageSize, ordersCursor, metadata) {
     }
 }
 
-export async function getOrdersHistory(metadata) {
+export async function getOrdersHistory(metadata, min_date) {
     let ordersCursors;
     let orders = [];
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
     const address = localStorage.getItem('WALLET_ADDRESS');
-    const min_date = new Date()
-    min_date.setMonth(min_date.getMonth() - 1);
     try {
         do {
             let ordersRequest = await client.getOrders({
@@ -182,7 +180,7 @@ export async function getOrdersHistory(metadata) {
                 sell_metadata: metadata,
                 order_by: 'timestamp',
                 direction: 'asc',
-                min_timestamp: min_date.toISOString()
+                min_timestamp: min_date
 
             });
             orders = orders.concat(ordersRequest.result);
@@ -190,23 +188,31 @@ export async function getOrdersHistory(metadata) {
 
 
         } while (ordersCursors);
+        orders.sort((a, b) => (a.updated_timestamp.localeCompare(b.updated_timestamp)));
     } catch (err) {
         console.log(err);
     }
     finally {
+        console.log(orders)
         return orders;
     }
 
 }
 
-export async function getPriceHistory(metadata) {
+/**
+ * 
+ * @param {*} metadata 
+ * @param {*} min_date 
+ * @returns liste contenant pour chaque jour le prix moyen et le volume total
+ */
+export async function getPriceHistory(metadata, min_date) {
     let h_prices = [];
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let map = new Map();
     let volume;
     let price;
     try {
-        const orders = await getOrdersHistory(metadata);
+        const orders = await getOrdersHistory(metadata, min_date);
         console.log(orders)
         orders.forEach((order) => {
 

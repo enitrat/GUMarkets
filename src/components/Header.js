@@ -7,6 +7,7 @@ import { useContext } from 'react'
 import { LoggedContext } from '../utils/context'
 import { useHistory } from "react-router-dom";
 import { DefaultButton } from '../styles/GlobalStyle'
+import { useState } from 'react'
 
 function Header() {
 
@@ -18,7 +19,7 @@ function Header() {
 `
     const StyledLink = styled(Link)`
   padding: 10px 15px;
-  color: #8186a0;
+  color: #c4fffc;
   text-decoration: none;
   font-size: 18px;
   text-align: center;
@@ -27,6 +28,7 @@ function Header() {
 
 
     const { logged, setLogged } = useContext(LoggedContext);
+    const [search, setSearch] = useState('')
     const history = useHistory();
 
     async function handleConnect() {
@@ -61,20 +63,29 @@ function Header() {
         }
     }
 
+    const handleInput = (e) => {
+        setSearch(e.target.value)
+    }
+
 
     return (
-        <div className=" jumbotron d-flex headerWrapper">
+        <div className="d-flex headerWrapper">
             <div className="d-flex">
                 <img src={Logo} className="mainLogo" alt="mainLogo" />
             </div>
             <div className="d-flex">
 
+                <div className="container d-flex justify-content-center">
+                    <input type="text" placeholder="Enter eth address" onChange={handleInput} />
+                    <StyledLink className="link" to={`/godsunchained/user/${search}`} >Search user</StyledLink>
+                </div>
+
             </div>
             <NavContainer>
                 {logged ? <DefaultButton onClick={handleDisconnect}>Disconnect</DefaultButton> : (<DefaultButton onClick={handleConnect}>Connect</DefaultButton>)}
-                <StyledLink className="link" to="/browse" >Browse Cards</StyledLink>
-                <StyledLink className="link" to="/account">Your Cards</StyledLink>
-                <StyledLink className="link" to="/discounts">Discounts</StyledLink>
+                <StyledLink className="link" to="/godsunchained/browse" >Browse Cards</StyledLink>
+                <StyledLink className="link" to="/godsunchained/account">Your Cards</StyledLink>
+                <StyledLink className="link" to="/godsunchained/discounts">Discounts</StyledLink>
             </NavContainer>
         </div>
     )

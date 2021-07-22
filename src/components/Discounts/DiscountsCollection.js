@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
-import Item from './Item'
-import '../styles/Collection.css'
+import DiscountItem from './DiscountItem'
+import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
-import { getAllProtos } from '../utils/apiCalls'
+import { getDiscounts } from '../../utils/apiCalls'
 
-function Collection({ showPopup, setPopup }) {
+function DiscountsCollection({ showPopup, setPopup }) {
     const [allProtos, setAllProtos] = useState([])
+    const [protos, setProtos] = useState([])
     const [isLoading, setLoading] = useState(false);
-    const [searchParam, setSearchParam] = useState("");
-
 
     async function initPage() {
         setLoading(true)
-        const myProtos = await getAllProtos();
+        const myProtos = await getDiscounts();
         setAllProtos(myProtos)
+        setProtos(myProtos)
         setLoading(false)
     }
 
@@ -21,10 +21,20 @@ function Collection({ showPopup, setPopup }) {
         initPage();
     }, [])
 
+    useEffect(() => {
+        console.log(protos)
+    }, [protos])
 
     const handleInput = (e) => {
-        setSearchParam(e.target.value.toLowerCase())
+        const filteredResult = allProtos.filter((proto) => {
+            let metadata = JSON.parse(proto.metadata)
+            return metadata.name.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+
+        setProtos(filteredResult)
     }
+
+
 
     return (
         <>
@@ -35,9 +45,9 @@ function Collection({ showPopup, setPopup }) {
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">
                     <div className="row">
-                        {allProtos.map((proto) => (
+                        {Object.keys(protos).map((key) => (
 
-                            JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto}></Item>
+                            <DiscountItem key={`${protos[key].token_proto}`} proto={protos[key]}></DiscountItem>
                         ))}
                     </div>
                 </ul>
@@ -47,4 +57,4 @@ function Collection({ showPopup, setPopup }) {
     )
 }
 
-export default Collection
+export default DiscountsCollection

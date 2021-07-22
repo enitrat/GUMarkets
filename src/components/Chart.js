@@ -14,16 +14,18 @@ import {
 } from 'recharts';
 import { getEthPrice } from '../utils/getProtoCollection.js';
 import { getPriceHistory } from '../utils/ImmutableXConnection.js'
+import { getAllOrdersHistory, getAvgDailyPrice } from '../utils/apiCalls.js';
 import { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
 import { SpinnerWrapper } from '../styles/GlobalStyle'
 
-function Chart({ proto, quality }) {
+function Chart({ proto, quality, type }) {
     const [history, setHistory] = useState([])
     const [isLoading, setLoading] = useState(false);
 
-    const Init = async (proto, quality) => {
+    const Init = async (proto, quality, min_date, type) => {
         setLoading(true)
+        console.log(min_date)
         //get price history
         const json = JSON.stringify(
             {
@@ -33,17 +35,55 @@ function Chart({ proto, quality }) {
         );
         const ethprice = await getEthPrice()
 
-        const hprices = await getPriceHistory(json)
-        hprices.forEach((elem) => (
-            elem.data.price = +(elem.data.price * ethprice).toFixed(2)
-        ))
-        console.log(hprices)
-        setHistory(hprices)
+        if (type === "month-avg") {
+            const hprices = await getAvgDailyPrice(json, min_date)
+            hprices.forEach((elem) => (
+                elem.data.price = +(elem.data.price * ethprice).toFixed(2)
+            ))
+            console.log(hprices)
+            setHistory(hprices)
+        }
+        else if (type === "month-detailed") {
+            const hprices = await getAllOrdersHistory(json, min_date)
+            hprices.forEach((elem) => (
+                elem.data.price = +(elem.data.price * ethprice).toFixed(2)
+            ))
+            console.log(hprices)
+            setHistory(hprices)
+        }
+        else if (type === "week-detailed") {
+            const hprices = await getAllOrdersHistory(json, min_date)
+            hprices.forEach((elem) => (
+                elem.data.price = +(elem.data.price * ethprice).toFixed(2)
+            ))
+            console.log(hprices)
+            setHistory(hprices)
+        }
+
         setLoading(false)
     }
 
     useEffect(() => {
-        Init(proto, quality)
+
+        let min_date;
+        switch (type) {
+            case ("month-avg" || "month-detailed"):
+                min_date = new Date()
+                min_date.setMonth(min_date.getMonth() - 1)
+                min_date = min_date.toISOString();
+                break;
+            case "week-detailed":
+                min_date = new Date()
+                min_date.setTime(min_date.getTime() - 7 * 24 * 60 * 60 * 1000)
+                min_date = min_date.toISOString();
+                break;
+            default:
+                min_date = undefined;
+        }
+        console.log(type)
+        console.log(min_date)
+        Init(proto, quality, min_date, type)
+
     }, [])
 
     return (

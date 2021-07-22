@@ -1,9 +1,12 @@
 import { setupAndLogin } from '../utils/ImmutableXConnection'
 import { LoggedContext } from '../utils/context'
 import { useEffect, useState, useContext } from 'react'
+import { Redirect } from 'react-router'
 
 import OwnedCollection from '../components/OwnedCollection'
 import OwnedPopup from '../components/OwnedPopup'
+import { Spinner } from 'react-bootstrap'
+
 
 function Account() {
 
@@ -11,10 +14,13 @@ function Account() {
     const [address, setAddress] = useState('')
     const [showPopup, setPopup] = useState(false);
     const [popupCard, setPopupCard] = useState(null)
+    const [isLoading, setLoading] = useState(true);
+
 
 
 
     async function logAccount() {
+        setLoading(true)
         if (!logged) {
             try {
                 await setupAndLogin()
@@ -26,6 +32,7 @@ function Account() {
             }
         }
         setAddress(localStorage.getItem('WALLET_ADDRESS'))
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -33,14 +40,25 @@ function Account() {
     }, [])
 
 
+    // return (
+    //     <div className="container">
+    //         <OwnedCollection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} user={address} />
+    //         {showPopup ?
+    //             <OwnedPopup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
+    //             : null}
+    //     </div>
+    // )
     return (
-        <div className="container">
-            <OwnedCollection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} user={address} />
-            {showPopup ?
-                <OwnedPopup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
-                : null}
-        </div>
+        <>
+            {isLoading ? <div className="container d-flex justify-content-center">
+                < Spinner animation="grow" /> </div > :
+                <>
+                    <Redirect to={'/godsunchained/user/' + localStorage.getItem('WALLET_ADDRESS')} />
+                </>
+            }
+        </>
     )
+
 }
 
 export default Account
