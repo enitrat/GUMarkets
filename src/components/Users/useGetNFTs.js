@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import axios from "axios";
 import { getEthPrice, getAllProtos } from '../../utils/apiCalls'
+import totalprotos from '../../assets/totalprotos.json'
 
 
 const useGetNFTs = (address) => {
 
+
     const [data, setData] = useState([]);
     //const [allPrices, setAllPrices] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [statePoints, setPoints] = useState(0)
 
+    var points = 0;
 
     /**
      * Retourne la liste des prix de chaque proto
@@ -104,6 +108,7 @@ const useGetNFTs = (address) => {
             const result = response.data.result[0].amount_sold
             const proto = response.data.result[0].buy.data.properties.image_url.split("id=")[1].split("&q=").join("-")
             const price = (result * Math.pow(10, -18) * ethPrice).toFixed(2)
+            points += totalprotos[proto]["points"]
             asset.token_proto = proto;
             asset.buyPrice = price;
             asset.actualPrice = getActualPrice(asset.token_proto, allPrices)
@@ -156,6 +161,8 @@ const useGetNFTs = (address) => {
             console.log(assets)
             await iterOnAssets(assets, allPrices);
             setData(assets)
+            console.log(points)
+            setPoints(points)
             setLoading(false)
 
         } catch (err) {
@@ -170,7 +177,7 @@ const useGetNFTs = (address) => {
         init();
     }, []);
 
-    return { data: data, isLoading: isLoading /*allPrices: allPrices*/ }
+    return { data: data, isLoading: isLoading, points: statePoints /*allPrices: allPrices*/ }
 }
 
 export default useGetNFTs

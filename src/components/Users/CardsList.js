@@ -32,7 +32,7 @@ function CardsList({ address }) {
      *      }
      * ]
      */
-    const { data: userCards, isLoading } = useGetNFTs(address);
+    const { data: userCards, isLoading, points } = useGetNFTs(address);
 
     const [searchParam, setSearchParam] = useState('');
 
@@ -52,7 +52,7 @@ function CardsList({ address }) {
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <>
-                    <WalletData assets={userCards} />
+                    <WalletData assets={userCards} points={points} />
                     <ul className="list-unstyled">
                         <div className="row">
                             {userCards.map((card) => (
