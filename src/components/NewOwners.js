@@ -38,7 +38,6 @@ function NewOwners({ proto, quality }) {
                     <tr>
                         <th scope="col">Owner</th>
                         <th scope="col">Buy price</th>
-                        <th scope="col">unique NFT id</th>
                         <th scope="col">available time</th>
                     </tr>
                 </thead>
@@ -51,7 +50,6 @@ function NewOwners({ proto, quality }) {
                             </Link>
                             </td>
                             <td>{trade.price}</td>
-                            <td>{trade.tokenID}</td>
                             <td>{trade.uptime}</td>
                         </tr>
                     ))

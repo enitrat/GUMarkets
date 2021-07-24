@@ -225,7 +225,7 @@ export async function getAvgDailyPrice(metadata, min_date) {
 
             let unixtime = Date.parse(order.updated_timestamp)
             let time = new Date(unixtime)
-            let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+            let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
             let unix_time = time.setUTCHours(0, 0, 0, 0)
             if (map.has(f_time)) {
                 const res = map.get(f_time);

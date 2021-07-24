@@ -21,7 +21,7 @@ import { SpinnerWrapper } from '../styles/GlobalStyle'
 
 function Chart({ proto, quality, type }) {
     const [history, setHistory] = useState([])
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     const Init = async (proto, quality, min_date, type) => {
         setLoading(true)

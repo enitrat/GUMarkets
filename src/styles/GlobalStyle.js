@@ -18,6 +18,7 @@ background-size: cover;
 color:white;
 min-height: 900px;
 margin-top:75px;
+width:100%;
 
 `
 
