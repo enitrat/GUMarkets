@@ -21,6 +21,17 @@ export const toEthPrice = (price) => {
 
 }
 
+export const getHistoricalEthPrice = async () => {
+    let url = 'https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max&interval=daily'
+    try {
+        const response = await Axios.get(url);
+        const result = response.data;
+        return result.prices;
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 /**
  * 
  * @returns {*} le prix de l'eth en USD
@@ -214,7 +225,8 @@ export async function getAvgDailyPrice(metadata, min_date) {
 
             let unixtime = Date.parse(order.updated_timestamp)
             let time = new Date(unixtime)
-            let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
+            let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+            let unix_time = time.setUTCHours(0, 0, 0, 0)
             if (map.has(f_time)) {
                 const res = map.get(f_time);
                 price = (+res.price + +toEthPrice(order.buy.data.quantity))
@@ -228,13 +240,14 @@ export async function getAvgDailyPrice(metadata, min_date) {
             }
             price.toFixed(6)
 
-            map.set(f_time, { price: price, volume: (volume + 1) });
+            map.set(f_time, { price: price, volume: (volume + 1), unix_time });
         });
         console.log(map)
         map.forEach((value, key) => {
             let dict = {
                 time: key,
                 data: value
+
             }
             h_prices = h_prices.concat(dict)
         })
@@ -264,13 +277,15 @@ export async function getAllOrdersHistory(metadata, min_date) {
             let unixtime = Date.parse(order.updated_timestamp)
             let time = new Date(unixtime)
             let f_time = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })
+            let unix_time = time.setUTCHours(0, 0, 0, 0)
             price = (+toEthPrice(order.buy.data.quantity))
             price.toFixed(6)
             let dict = {
                 time: f_time,
                 data: {
                     price: price,
-                    volume: 0
+                    volume: 0,
+                    unix_time: unix_time
                 },
             }
             h_prices = h_prices.concat(dict)

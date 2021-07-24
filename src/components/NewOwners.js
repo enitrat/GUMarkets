@@ -1,8 +1,14 @@
 
 import { useState, useEffect } from 'react'
 import { getLastTradesData, getOrdersHistory, getLastTrades } from '../utils/apiCalls'
-
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 function NewOwners({ proto, quality }) {
+
+    const WhiteText = styled.table`
+        color:white;
+
+    `
 
     const [trades, setTrades] = useState([])
 
@@ -27,12 +33,31 @@ function NewOwners({ proto, quality }) {
 
     return (
         <div>
-            <ul>
-                {trades.map((trade) => (
-                    <li>owner : {trade.owner}, price:{trade.price}, NFT_id : {trade.tokenID}, temps en seconde : {trade.uptime}</li>
-                ))
-                }
-            </ul>
+            <WhiteText className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Owner</th>
+                        <th scope="col">Buy price</th>
+                        <th scope="col">unique NFT id</th>
+                        <th scope="col">available time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {trades.map((trade) => (
+                        <tr>
+
+                            <td><Link to={`/godsunchained/protos/${trade.owner}`}>
+                                {trade.owner}
+                            </Link>
+                            </td>
+                            <td>{trade.price}</td>
+                            <td>{trade.tokenID}</td>
+                            <td>{trade.uptime}</td>
+                        </tr>
+                    ))
+                    }
+                </tbody>
+            </WhiteText>
         </div>
     )
 }

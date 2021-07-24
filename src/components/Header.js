@@ -11,6 +11,7 @@ import { useState } from 'react'
 
 function Header() {
 
+
     const NavContainer = styled.nav`
   padding: 30px;
   display: flex;
@@ -26,11 +27,20 @@ function Header() {
 `
 
     const HeaderWrapper = styled.nav`
+    background-image: linear-gradient(to right, rgb(50, 50, 50) 10%, transparent), linear-gradient(to top, rgb(2, 2, 2) 1%, transparent), url(https://blog.godsunchained.com/wp-content/uploads/2019/12/atlas_header.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     display:flex;
     align-items: center;
     max-height: 75px;
     justify-content: space-between;
-    background-color: #7199A5;
+    position:fixed;
+z-index:100;
+    top: 0;
+    width: 100%
+    
 `
 
     const { logged, setLogged } = useContext(LoggedContext);

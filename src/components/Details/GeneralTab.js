@@ -6,6 +6,7 @@ import '../../styles/details.css'
 
 
 function GeneralTab({ proto, quality, id, orders, price, getQuality }) {
+
     const Pcontainer = styled.div`
     display:flex;
     flex-direction:row;

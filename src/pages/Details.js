@@ -4,7 +4,7 @@ import { getCheapestUSDSellOrders } from '../utils/apiCalls'
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import styled from "styled-components";
 import Chart from '../components/Chart'
-import { BuyButton } from '../styles/GlobalStyle'
+import { BuyButton, Parallax } from '../styles/GlobalStyle'
 import { fillOrder } from '../utils/ImmutableXConnection'
 import '../styles/details.css'
 import NewOwners from "../components/NewOwners";
@@ -14,7 +14,9 @@ import DetailedTab from '../components/Details/DetailedTab'
 
 
 
+
 function Details() {
+
 
 
 
@@ -88,7 +90,7 @@ function Details() {
 
 
     return (
-        <div>
+        <Parallax>
             {isLoading ?
                 <div className="container d-flex justify-content-center">
                     <Spinner animation="grow" /> </div>
@@ -96,7 +98,7 @@ function Details() {
                 error ? <h5>this card is not available for trade</h5> :
 
                     <div>
-                        <div className="bloc-tabs">
+                        <div className="bloc-tabs" style={{ "background-color": "transparent" }}>
                             <button
                                 className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
                                 onClick={() => toggleTab(1)}
@@ -112,15 +114,15 @@ function Details() {
 
                         </div>
 
-                        <div className="content-tabs">
+                        <div className="content-tabs" style={{ "background-color": "transparent" }}>
                             <div
-                                className={toggleState === 1 ? "content  active-content" : "content"}
+                                className={toggleState === 1 ? "content  active-content" : "content"} style={{ "background-color": "transparent" }}
                             >
                                 <GeneralTab proto={proto} quality={quality} id={id} orders={orders} price={price} getQuality={getQuality} />
 
                             </div>
                             <div
-                                className={toggleState === 2 ? "content  active-content" : "content"}
+                                className={toggleState === 2 ? "content  active-content" : "content"} style={{ "background-color": "transparent" }}
                             >
                                 <DetailedTab proto={proto} quality={quality} id={id} orders={orders} price={price} getQuality={getQuality} />
 
@@ -129,7 +131,7 @@ function Details() {
                     </div>
 
             }
-        </div>
+        </Parallax>
     )
 
 }
