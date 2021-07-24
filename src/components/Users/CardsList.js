@@ -4,6 +4,8 @@ import Card from './Card'
 import WalletData from './WalletData'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
+import { SearchWrapper } from '../../styles/GlobalStyle'
+
 
 
 function CardsList({ address }) {
@@ -46,9 +48,9 @@ function CardsList({ address }) {
 
     return (
         <div>
-            <div className="container d-flex justify-content-center">
+            <SearchWrapper className="container d-flex justify-content-center">
                 <input type="text" placeholder="Search a proto" onChange={handleInput} />
-            </div>
+            </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <>

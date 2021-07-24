@@ -17,14 +17,17 @@ function Item({ proto }) {
                         <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${proto.token_proto.split('-')[0]}&q=${proto.token_proto.split('-')[1]}`} alt={`${proto.token_proto} cover`} onClick={handleClick} />
                     </Link>
                 </ImageWrapper>
-                <InfoWrapper>
-                    <span>
-                        {JSON.parse(proto.metadata).name}
-                    </span>
-                    <span>
-                        {proto.price}$
-                    </span>
-                </InfoWrapper>
+                {proto.price !== undefined &&
+                    <InfoWrapper>
+                        <span>
+                            {JSON.parse(proto.metadata).name}
+                        </span>
+                        <span>
+                            {proto.price}$
+                        </span>
+                    </InfoWrapper>
+                }
+
             </li>
 
 

@@ -8,9 +8,9 @@ function Card({ data }) {
 
 
     return (
-        <CardWrapper>
+        <CardWrapper className="col">
             {(data.token_proto && data.buyPrice !== undefined) && (
-                <div className="jumbotron container justify-content-center">
+                <div>
                     <Item key={`${data.token_proto}`} proto={data} />
                     <p>buying price : {data.buyPrice} </p>
                     <span> actual price : {data.actualPrice}</span>
