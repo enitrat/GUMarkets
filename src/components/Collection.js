@@ -3,6 +3,7 @@ import Item from './Item'
 import '../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
 import { getAllProtos } from '../utils/apiCalls'
+import { SearchWrapper } from '../styles/GlobalStyle'
 
 function Collection({ showPopup, setPopup }) {
     const [allProtos, setAllProtos] = useState([])
@@ -28,16 +29,16 @@ function Collection({ showPopup, setPopup }) {
 
     return (
         <>
-            <div className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a proto" onChange={handleInput} />
-            </div>
+            <SearchWrapper className="container d-flex justify-content-center">
+                <input type="text" placeholder="Search a card" onChange={handleInput} />
+            </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">
                     <div className="row">
                         {allProtos.map((proto) => (
 
-                            JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto}></Item>
+                            JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto} />
                         ))}
                     </div>
                 </ul>

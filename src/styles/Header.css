@@ -6,8 +6,8 @@
     align-items: center;
     max-height: 75px;
     justify-content: space-between;
-    background-color: rgba(8, 80, 90, 0.699);
-    margin-bottom: 10px;
+    background-color: #7199A5;
+    padding-bottom: 10px;
 }
 
 .subWrapper {

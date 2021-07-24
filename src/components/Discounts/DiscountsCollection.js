@@ -3,6 +3,8 @@ import DiscountItem from './DiscountItem'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
 import { getDiscounts } from '../../utils/apiCalls'
+import { SearchWrapper } from '../../styles/GlobalStyle'
+
 
 function DiscountsCollection({ showPopup, setPopup }) {
     const [allProtos, setAllProtos] = useState([])
@@ -38,9 +40,9 @@ function DiscountsCollection({ showPopup, setPopup }) {
 
     return (
         <>
-            <div className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a proto" onChange={handleInput} />
-            </div>
+            <SearchWrapper className="container d-flex justify-content-center">
+                <input type="text" placeholder="Search a card" onChange={handleInput} />
+            </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">

@@ -25,7 +25,13 @@ function Header() {
   text-align: center;
 `
 
-
+    const HeaderWrapper = styled.nav`
+    display:flex;
+    align-items: center;
+    max-height: 75px;
+    justify-content: space-between;
+    background-color: #7199A5;
+`
 
     const { logged, setLogged } = useContext(LoggedContext);
     const [search, setSearch] = useState('')
@@ -69,13 +75,13 @@ function Header() {
 
 
     return (
-        <div className="d-flex headerWrapper">
-            <div className="d-flex">
+        <HeaderWrapper>
+            <div>
                 <img src={Logo} className="mainLogo" alt="mainLogo" />
             </div>
-            <div className="d-flex">
+            <div>
 
-                <div className="container d-flex justify-content-center">
+                <div className=" d-flex justify-content-center">
                     <input type="text" placeholder="Enter eth address" onChange={handleInput} />
                     <StyledLink className="link" to={`/godsunchained/user/${search}`} >Search user</StyledLink>
                 </div>
@@ -87,7 +93,7 @@ function Header() {
                 <StyledLink className="link" to="/godsunchained/account">Your Cards</StyledLink>
                 <StyledLink className="link" to="/godsunchained/discounts">Discounts</StyledLink>
             </NavContainer>
-        </div>
+        </HeaderWrapper>
     )
 }
 

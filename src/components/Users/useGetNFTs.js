@@ -126,6 +126,12 @@ const useGetNFTs = (address) => {
 
     };
 
+    /**
+     * 
+     * @param {*} token_proto 
+     * @param {*} allPrices la liste des prix actuels
+     * @returns le prix du proto analysé
+     */
     const getActualPrice = (token_proto, allPrices) => {
         try {
             return (allPrices.filter((proto) => proto.token_proto === token_proto)[0].price)
@@ -139,9 +145,8 @@ const useGetNFTs = (address) => {
 
         for (const asset of assets) {
 
-            //1. token_proto, 2. buyPrice
-            //3. actual_Price
-            //4. diff_price
+            //Pour chaque asset, on lui rajoute une propriété token_proto, buyPrice, actualPrice, diffPrice
+
             await getPriceInfo(asset, allPrices)
         };
         return;
@@ -150,18 +155,12 @@ const useGetNFTs = (address) => {
     async function init() {
         try {
             setLoading(true)
-
-
             // On récupère les prix par proto
             const allPrices = await getAllPrices();
             //On récupère la liste des assets, telle que retournée par l'API
             const assets = await getAllAssets();
-            //Pour chaque asset, on lui rajoute une propriété :
-            console.log(allPrices)
-            console.log(assets)
             await iterOnAssets(assets, allPrices);
             setData(assets)
-            console.log(points)
             setPoints(points)
             setLoading(false)
 

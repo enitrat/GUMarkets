@@ -52,6 +52,7 @@ export const getEthPrice = async () => {
 export async function getAllProtos() {
 
     const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
+    const ethPrice = await getEthPrice();
     let config = {
         headers: { 'x-api-key': 'Np8BV2d5QR9TSFEr9EvF66FWcJf0wIxy2qBpOH6s' },
         params: {
@@ -61,6 +62,7 @@ export async function getAllProtos() {
     let url = 'https://gy2601wgv6.execute-api.us-east-1.amazonaws.com/dev/all-orders'
     const response = await Axios(url, config)
     const protos = response.data
+    protos.forEach((proto) => proto.price = (proto.takerAssetAmount * ethPrice * Math.pow(10, -18)).toFixed(2))
     return protos;
 
 

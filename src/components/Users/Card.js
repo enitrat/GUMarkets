@@ -1,5 +1,6 @@
 import useCard from "./useCard";
 import Item from "../Item";
+import { CardWrapper } from '../../styles/GlobalStyle'
 
 function Card({ data }) {
 
@@ -7,7 +8,7 @@ function Card({ data }) {
 
 
     return (
-        <div>
+        <CardWrapper>
             {(data.token_proto && data.buyPrice !== undefined) && (
                 <div className="jumbotron container justify-content-center">
                     <Item key={`${data.token_proto}`} proto={data} />
@@ -19,7 +20,7 @@ function Card({ data }) {
             }
 
 
-        </div>
+        </CardWrapper>
     )
 
 }

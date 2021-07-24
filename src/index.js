@@ -9,6 +9,7 @@ import Discounts from './pages/Discounts'
 import Browse from './pages/Browse'
 import Details from './pages/Details'
 import User from './pages/User'
+import './styles/all.css'
 
 import { LoggedProvider } from './utils/context'
 import 'bootstrap/dist/css/bootstrap.min.css';
