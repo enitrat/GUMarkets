@@ -33,7 +33,7 @@ function Collection({ showPopup, setPopup }) {
     }
 
     return (
-        <Parallax>
+        <>
             <SearchWrapper className="container d-flex justify-content-center">
                 <input type="text" placeholder="Search a card" onChange={handleInput} />
             </SearchWrapper>
@@ -53,7 +53,7 @@ function Collection({ showPopup, setPopup }) {
                     </div>
                 </ul>
             }
-        </Parallax>
+        </>
 
     )
 }

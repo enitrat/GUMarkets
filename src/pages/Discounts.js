@@ -12,13 +12,13 @@ function Discounts() {
     console.log(popupCard)
 
     return (
-        <CollectionWrapper >
+        < >
             <DiscountsCollection showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} setPopupCard={setPopupCard} />
             {showPopup ?
                 <Popup showPopup={showPopup} setPopup={setPopup} popupCard={popupCard} />
                 : null}
 
-        </CollectionWrapper>
+        </>
     )
 }
 

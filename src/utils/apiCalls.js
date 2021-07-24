@@ -220,7 +220,6 @@ export async function getAvgDailyPrice(metadata, min_date) {
     let price;
     try {
         const orders = await getOrdersHistory(metadata, min_date);
-        console.log(orders)
         orders.forEach((order) => {
 
             let unixtime = Date.parse(order.updated_timestamp)
@@ -242,7 +241,6 @@ export async function getAvgDailyPrice(metadata, min_date) {
 
             map.set(f_time, { price: price, volume: (volume + 1), unix_time });
         });
-        console.log(map)
         map.forEach((value, key) => {
             let dict = {
                 time: key,

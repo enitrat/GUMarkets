@@ -18,6 +18,7 @@ function DetailedTab({ proto, quality, id, orders, price, getQuality }) {
     }
   `
 
+
     return (
         <>
             <div className="d-flex align-items-center">

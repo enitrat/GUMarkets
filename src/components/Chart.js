@@ -53,7 +53,6 @@ function Chart({ proto, quality, type }) {
                 ethprice = found === undefined ? ethcurrentPrice : found[1]
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
             })
-            console.log(hprices)
             setHistory(hprices)
         }
         else if (type === "week-detailed") {
@@ -63,7 +62,6 @@ function Chart({ proto, quality, type }) {
                 ethprice = found === undefined ? ethcurrentPrice : found[1]
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
             })
-            console.log(hprices)
             setHistory(hprices)
         }
 
@@ -99,9 +97,7 @@ function Chart({ proto, quality, type }) {
 
     return (
         <>
-            {
-                history.forEach((elem) => console.log(typeof (elem.time)))
-            }
+
             {isLoading ?
                 <SpinnerWrapper>
                     <Spinner animation="grow" /> </SpinnerWrapper>
@@ -130,7 +126,7 @@ function Chart({ proto, quality, type }) {
                                 Volume
                             </Label>
                         </YAxis>
-                        <Tooltip itemStyle={{ color: "black" }} />
+                        <Tooltip contentStyle={{ "background-color": "rgba(0, 129, 189, 0.2)" }} wrapperStyle={{ color: "white" }} itemStyle={{ color: "white" }} />
                         <Legend />
                         <Line yAxisId="left" dot={false} name="price" type="monotone" dataKey="data.price" stroke="#A9DFBF " />
                         <Bar yAxisId="right" name="volume" dataKey="data.volume" barSize={5} fill="#AF7AC5" />

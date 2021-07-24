@@ -7,9 +7,9 @@ function User() {
 
     const { id: address } = useParams();
     return (
-        <CollectionWrapper>
+        <>
             <CardsList address={address} />
-        </CollectionWrapper>
+        </>
     )
 }
 

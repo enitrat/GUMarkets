@@ -47,7 +47,7 @@ function CardsList({ address }) {
 
 
     return (
-        <Parallax>
+        <>
             <SearchWrapper className="container d-flex justify-content-center">
                 <input type="text" placeholder="Search a proto" onChange={handleInput} />
             </SearchWrapper>
@@ -66,7 +66,7 @@ function CardsList({ address }) {
                     </ul>
                 </>}
 
-        </Parallax>
+        </>
     )
 }
 
