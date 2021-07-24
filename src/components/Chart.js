@@ -25,7 +25,6 @@ function Chart({ proto, quality, type }) {
 
     const Init = async (proto, quality, min_date, type) => {
         setLoading(true)
-        console.log(min_date)
         //get price history
         const json = JSON.stringify(
             {
@@ -35,7 +34,6 @@ function Chart({ proto, quality, type }) {
         );
         const ethPriceHistory = await getHistoricalEthPrice()
         const ethcurrentPrice = await getEthPrice();
-        console.log(ethPriceHistory);
         let ethprice;
 
         if (type === "month-avg") {
@@ -76,7 +74,7 @@ function Chart({ proto, quality, type }) {
 
         let min_date;
         switch (type) {
-            case ("month-avg" || "month-detailed"):
+            case ("month-avg"):
                 min_date = new Date()
                 min_date.setMonth(min_date.getMonth() - 1)
                 min_date = min_date.toISOString();
@@ -86,17 +84,24 @@ function Chart({ proto, quality, type }) {
                 min_date.setTime(min_date.getTime() - 7 * 24 * 60 * 60 * 1000)
                 min_date = min_date.toISOString();
                 break;
+            case ("month-detailed"):
+                min_date = new Date()
+                min_date.setMonth(min_date.getMonth() - 1)
+                min_date = min_date.toISOString();
+                break;
             default:
+                console.log("===DEFAULT===", type)
                 min_date = undefined;
         }
-        console.log(type)
-        console.log(min_date)
         Init(proto, quality, min_date, type)
 
     }, [])
 
     return (
         <>
+            {
+                history.forEach((elem) => console.log(typeof (elem.time)))
+            }
             {isLoading ?
                 <SpinnerWrapper>
                     <Spinner animation="grow" /> </SpinnerWrapper>

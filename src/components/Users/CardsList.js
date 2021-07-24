@@ -4,7 +4,7 @@ import Card from './Card'
 import WalletData from './WalletData'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
-import { SearchWrapper } from '../../styles/GlobalStyle'
+import { SearchWrapper, Parallax } from '../../styles/GlobalStyle'
 
 
 
@@ -47,7 +47,7 @@ function CardsList({ address }) {
 
 
     return (
-        <div>
+        <Parallax>
             <SearchWrapper className="container d-flex justify-content-center">
                 <input type="text" placeholder="Search a proto" onChange={handleInput} />
             </SearchWrapper>
@@ -66,7 +66,7 @@ function CardsList({ address }) {
                     </ul>
                 </>}
 
-        </div>
+        </Parallax>
     )
 }
 
