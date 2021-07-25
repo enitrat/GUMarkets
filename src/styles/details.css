@@ -13,3 +13,19 @@
 .active-content {
     display: block;
 }
+
+.activeTab {
+    border: 0;
+    border-bottom: 2px solid purple;
+    outline: 0;
+    color: white;
+    background: transparent;
+}
+
+.inactiveTab {
+    border: 0;
+    border-bottom: 2px solid grey;
+    outline: 0;
+    color: white;
+    background: transparent;
+}

@@ -10,7 +10,7 @@ function Item({ proto }) {
     }
 
     return (
-        <CardWrapper className="col">
+        <>
             <li key={proto.token_proto}>
                 <ImageWrapper>
                     <Link to={`/godsunchained/protos/${proto.token_proto}`}>
@@ -31,7 +31,7 @@ function Item({ proto }) {
             </li>
 
 
-        </CardWrapper>
+        </>
     )
 }
 

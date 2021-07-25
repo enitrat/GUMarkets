@@ -4,7 +4,7 @@ import Card from './Card'
 import WalletData from './WalletData'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
-import { SearchWrapper, Parallax } from '../../styles/GlobalStyle'
+import { SearchWrapper, Parallax, SearchBar, CardWrapper } from '../../styles/GlobalStyle'
 
 
 
@@ -49,18 +49,23 @@ function CardsList({ address }) {
     return (
         <>
             <SearchWrapper className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a proto" onChange={handleInput} />
+                <SearchBar type="text" placeholder="Search a card" onChange={handleInput} />
             </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <>
                     <WalletData assets={userCards} points={points} />
                     <ul className="list-unstyled">
-                        <div className="row">
-                            {userCards.map((card) => (
+                        <div className="row" style={{ width: "100%" }}>
+                            {userCards.map((card) => {
 
-                                card.metadata.name.toLowerCase().includes(searchParam) && <Card data={card} />
-                            )
+                                return (
+                                    card.metadata.name.toLowerCase().includes(searchParam) &&
+
+                                    <Card data={card} />
+                                )
+
+                            }
                             )}
                         </div>
                     </ul>

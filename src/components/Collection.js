@@ -3,7 +3,7 @@ import Item from './Item'
 import '../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
 import { getAllProtos } from '../utils/apiCalls'
-import { SearchWrapper, Parallax } from '../styles/GlobalStyle'
+import { SearchWrapper, Parallax, CardWrapper, SearchBar } from '../styles/GlobalStyle'
 import styled from 'styled-components'
 
 function Collection({ showPopup, setPopup }) {
@@ -35,7 +35,7 @@ function Collection({ showPopup, setPopup }) {
     return (
         <>
             <SearchWrapper className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a card" onChange={handleInput} />
+                <SearchBar type="text" placeholder="Search a card" onChange={handleInput} />
             </SearchWrapper>
             {isLoading ?
                 <div className="container d-flex justify-content-center">
@@ -43,13 +43,21 @@ function Collection({ showPopup, setPopup }) {
                 </div>
                 :
                 <ul className="list-unstyled">
-                    <div className="row">
-                        {allProtos.map((proto) => {
+                    <div className="container-fluid">
+                        <div className="row" style={{ width: "100%" }}>
+                            {allProtos.map((proto) => {
 
-                            return (JSON.parse(proto.metadata).name !== undefined && JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto} />)
+                                return (
 
-                        }
-                        )}
+                                    JSON.parse(proto.metadata).name !== undefined && JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) &&
+                                    <CardWrapper className="col">
+                                        <Item key={`${proto.token_proto}`} proto={proto} />
+                                    </CardWrapper>
+
+                                )
+                            }
+                            )}
+                        </div>
                     </div>
                 </ul>
             }

@@ -6,7 +6,7 @@ import { setupAndLogin, logout } from '../utils/ImmutableXConnection'
 import { useContext } from 'react'
 import { LoggedContext } from '../utils/context'
 import { useHistory } from "react-router-dom";
-import { DefaultButton } from '../styles/GlobalStyle'
+import { DefaultButton, SearchBar } from '../styles/GlobalStyle'
 import { useState } from 'react'
 
 function Header() {
@@ -37,9 +37,11 @@ function Header() {
     max-height: 75px;
     justify-content: space-between;
     position:fixed;
-z-index:100;
+    z-index:100;
     top: 0;
-    width: 100%
+    width: 100%;
+    
+    
     
 `
 
@@ -92,7 +94,7 @@ z-index:100;
             <div>
 
                 <div className=" d-flex justify-content-center">
-                    <input type="text" placeholder="Enter eth address" onChange={handleInput} />
+                    <SearchBar type="text" placeholder="Enter eth address" onChange={handleInput} />
                     <StyledLink className="link" to={`/godsunchained/user/${search}`} >Search user</StyledLink>
                 </div>
 

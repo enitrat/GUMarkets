@@ -3,7 +3,7 @@ import DiscountItem from './DiscountItem'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
 import { getDiscounts } from '../../utils/apiCalls'
-import { SearchWrapper } from '../../styles/GlobalStyle'
+import { SearchWrapper, CardWrapper, SearchBar } from '../../styles/GlobalStyle'
 
 
 function DiscountsCollection({ showPopup, setPopup }) {
@@ -41,16 +41,20 @@ function DiscountsCollection({ showPopup, setPopup }) {
     return (
         <>
             <SearchWrapper className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a card" onChange={handleInput} />
+                <SearchBar type="text" placeholder="Search a card" onChange={handleInput} />
             </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <ul className="list-unstyled">
-                    <div className="row">
-                        {Object.keys(protos).map((key) => (
-
-                            <DiscountItem key={`${protos[key].token_proto}`} proto={protos[key]}></DiscountItem>
-                        ))}
+                    <div className="row" style={{ width: "100%" }}>
+                        {Object.keys(protos).map((key) => {
+                            return (
+                                <CardWrapper className="col">
+                                    <DiscountItem key={`${protos[key].token_proto}`} proto={protos[key]}></DiscountItem>
+                                </CardWrapper>
+                            )
+                        }
+                        )}
                     </div>
                 </ul>
             }

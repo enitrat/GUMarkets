@@ -12,9 +12,6 @@ import GeneralTab from '../components/Details/GeneralTab'
 import DetailedTab from '../components/Details/DetailedTab'
 
 
-
-
-
 function Details() {
 
 
@@ -98,15 +95,15 @@ function Details() {
                 error ? <h5>this card is not available for trade</h5> :
 
                     <div>
-                        <div className="bloc-tabs" style={{ "background-color": "transparent" }}>
+                        <div className="d-flex justify-content-center " style={{ "background-color": "transparent" }}>
                             <button
-                                className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+                                className={toggleState === 1 ? "activeTab" : "inactiveTab"}
                                 onClick={() => toggleTab(1)}
                             >
                                 General info
                             </button>
                             <button
-                                className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+                                className={toggleState === 2 ? "activeTab" : "inactiveTab"}
                                 onClick={() => toggleTab(2)}
                             >
                                 Detailed Info
