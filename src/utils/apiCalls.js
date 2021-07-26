@@ -190,14 +190,20 @@ export async function getAssetInfo(id) {
     return infos.user
 }
 export async function getLastTradesData(metadata) {
-    const ethPrice = await getEthPrice();
-
+    const ethcurrentPrice = await getEthPrice();
+    const ethPriceHistory = await getHistoricalEthPrice()
     let datas = [];
+    let ethPrice;
     try {
         const trades = await getLastTrades(metadata);
         for (const trade of trades) {
             let tokenID = trade.sell.data.id;
             let owner = await getAssetInfo(tokenID)
+            let unix_time = Date.parse(trade.updated_timestamp)
+            console.log(unix_time)
+            unix_time = new Date(unix_time).setUTCHours(0, 0, 0, 0)
+            let found = ethPriceHistory.find(element => element[0] === unix_time)
+            ethPrice = found === undefined ? ethcurrentPrice : found[1]
             let price = (trade.buy.data.quantity * Math.pow(10, -18) * ethPrice).toFixed(2)
             datas = datas.concat({ tokenID: tokenID, owner: owner, price: price, uptime: (Date.parse(trade.updated_timestamp) - Date.parse(trade.timestamp)) / 1000 })
         }

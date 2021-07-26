@@ -95,7 +95,7 @@ function Header() {
 
                 <div className=" d-flex justify-content-center">
                     <SearchBar type="text" placeholder="Enter eth address" onChange={handleInput} />
-                    <StyledLink className="link" to={`/godsunchained/user/${search}`} >Search user</StyledLink>
+                    <StyledLink className="link" to={`/godsunchained/user/${search}`} onClick={() => window.location.reload()}>Search user</StyledLink>
                 </div>
 
             </div>

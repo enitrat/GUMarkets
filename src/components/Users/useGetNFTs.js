@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios";
-import { getEthPrice, getAllProtos } from '../../utils/apiCalls'
+import { getEthPrice, getAllProtos, getHistoricalEthPrice } from '../../utils/apiCalls'
 import totalprotos from '../../assets/totalprotos.json'
 
 
@@ -92,8 +92,9 @@ const useGetNFTs = (address) => {
     const getPriceInfo = async (asset, allPrices) => {
 
         try {
-            const ethPrice = localStorage.getItem('ethPrice');
-
+            const ethcurrentPrice = localStorage.getItem('ethPrice');
+            const ethPriceHistory = await getHistoricalEthPrice()
+            let ethPrice;
             let config = {
                 params: {
                     'page_size': 20,
@@ -105,8 +106,15 @@ const useGetNFTs = (address) => {
             }
             const url = 'https://api.x.immutable.com/v1/orders'
             const response = await axios.get(url, config)
+
             const result = response.data.result[0].amount_sold
             const proto = response.data.result[0].buy.data.properties.image_url.split("id=")[1].split("&q=").join("-")
+            //ethprice at updated_tmstp time
+            let unix_time = Date.parse(response.data.result[0].updated_timestamp)
+            unix_time = new Date(unix_time).setUTCHours(0, 0, 0, 0)
+            let found = ethPriceHistory.find(element => element[0] === unix_time)
+            ethPrice = found === undefined ? ethcurrentPrice : found[1]
+
             const price = (result * Math.pow(10, -18) * ethPrice).toFixed(2)
             points += totalprotos[proto]["points"]
             asset.token_proto = proto;
