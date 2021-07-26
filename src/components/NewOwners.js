@@ -14,6 +14,7 @@ function NewOwners({ proto, quality }) {
 
     async function init() {
         try {
+
             const json = JSON.stringify(
                 {
                     "proto": [`${proto}`],
