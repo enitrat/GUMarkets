@@ -89,11 +89,11 @@ const useGetNFTs = (address) => {
      * 
      * @param {*} asset le NFT dont on veut récupérer le prix d'acquisition
      */
-    const getPriceInfo = async (asset, allPrices) => {
+    const getPriceInfo = async (asset, allPrices, historicalPrices) => {
 
         try {
             const ethcurrentPrice = localStorage.getItem('ethPrice');
-            const ethPriceHistory = await getHistoricalEthPrice()
+            const ethPriceHistory = historicalPrices
             let ethPrice;
             let config = {
                 params: {
@@ -151,12 +151,17 @@ const useGetNFTs = (address) => {
 
     const iterOnAssets = async (assets, allPrices) => {
 
-        for (const asset of assets) {
+        const historicalPrices = await getHistoricalEthPrice();
+        // for (const asset of assets) {
 
-            //Pour chaque asset, on lui rajoute une propriété token_proto, buyPrice, actualPrice, diffPrice
+        //     //Pour chaque asset, on lui rajoute une propriété token_proto, buyPrice, actualPrice, diffPrice
 
-            await getPriceInfo(asset, allPrices)
-        };
+        //     await getPriceInfo(asset, allPrices, historicalPrices)
+        // };
+
+        await Promise.all(assets.map(async (asset) => {
+            await getPriceInfo(asset, allPrices, historicalPrices)
+        }))
         return;
     }
 
