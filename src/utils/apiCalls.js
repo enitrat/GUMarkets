@@ -37,18 +37,18 @@ export const getHistoricalEthPrice = async () => {
  * @returns {*} le prix de l'eth en USD
  */
 export const getEthPrice = async () => {
-    let url = 'https://min-api.cryptocompare.com/data/price'
+    let url = 'https://api.coingecko.com/api/v3/simple/price'
     try {
         const response = await Axios.get(url,
             {
                 params:
                 {
-                    "fsym": "ETH",
-                    "tsyms": "USD",
+                    "ids": "ethereum",
+                    "vs_currencies": "usd",
                 }
             });
         const result = response.data;
-        return result.USD;
+        return result.ethereum.usd;
     } catch (err) {
         console.log(err)
     }
