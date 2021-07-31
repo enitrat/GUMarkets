@@ -36,7 +36,7 @@ ReactDOM.render(
 					<Route path="/godsunchained/protos/:id">
 						<Details />
 					</Route>
-					<Route path="/godsunchained/user/:id">
+					<Route path="/godsunchained/user/:id/:type">
 						<User />
 					</Route>
 				</Parallax>

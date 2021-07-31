@@ -102,7 +102,7 @@ function Header() {
             <NavContainer>
                 {logged ? <DefaultButton onClick={handleDisconnect}>Disconnect</DefaultButton> : (<DefaultButton onClick={handleConnect}>Connect</DefaultButton>)}
                 <StyledLink className="link" to="/godsunchained/browse" >Browse Cards</StyledLink>
-                <StyledLink className="link" to="/godsunchained/account">Your Cards</StyledLink>
+                <StyledLink className="link" to="/godsunchained/account">Your Account</StyledLink>
                 <StyledLink className="link" to="/godsunchained/discounts">Discounts</StyledLink>
             </NavContainer>
         </HeaderWrapper>
