@@ -4,6 +4,7 @@ import Card from './Card'
 import WalletData from './WalletData'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { SearchWrapper, Parallax, SearchBar, CardWrapper } from '../../styles/GlobalStyle'
 
 
@@ -54,6 +55,7 @@ function CardsList({ address }) {
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <>
+                    <Link to={`/godsunchained/user/${address}/history?type=all`}>Show trade history</Link>
                     <WalletData assets={userCards} points={points} />
                     <ul className="list-unstyled">
                         <div className="row" style={{ width: "100%" }}>

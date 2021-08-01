@@ -8,6 +8,9 @@ const useGetTrades = (address) => {
 
     const [history, setHistory] = useState([])
     const [activeTrades, setActiveTrades] = useState([])
+    const [benefs, setBenefs] = useState(0);
+    const [pending, setPending] = useState(0);
+
 
     const getAllTrades = async () => {
         let config = {
@@ -35,20 +38,55 @@ const useGetTrades = (address) => {
 
     }
 
-    const sumBenefs = () => {
+    const sumActive = (activeTrades) => {
+        let sum = 0;
+        activeTrades.forEach((trade) => {
+            sum += trade.usd_price;
+        })
+        setPending(sum)
+        return sum;
+    }
 
+    const sumBenefs = (history) => {
+        let sum = 0;
+        history.forEach((trade) => {
+            if (trade.makerAddress === address) {
+                console.log("==")
+                sum += trade.usd_price;
+            }
+            else {
+                sum -= trade.usd_price;
+            }
+        });
+        setBenefs(sum)
+        return sum;
     }
 
     const init = async () => {
-        const history = await getAllTrades();
-        getAllActivePositions(history)
+        try {
+            const _history = await getAllTrades();
+
+        } catch (err) { console.log(err) }
+
+    }
+
+    const calcs = async () => {
+        const _activeTrades = getAllActivePositions(history)
+        const _benefs = sumBenefs(history);
+        const _pending = sumActive(_activeTrades);
+        console.log(_benefs);
+        console.log(_pending);
     }
 
     useEffect(() => {
         init();
     }, []);
 
-    return { history: history, activeTrades: activeTrades }
+    useEffect(() => {
+        calcs();
+    }, [history]);
+
+    return { history: history, activeTrades: activeTrades, benefs: benefs, pending: pending }
 }
 
 export default useGetTrades

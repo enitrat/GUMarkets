@@ -53,7 +53,7 @@ function Account() {
             {isLoading ? <div className="container d-flex justify-content-center">
                 < Spinner animation="grow" /> </div> :
                 <>
-                    <Redirect to={'/godsunchained/user/' + localStorage.getItem('WALLET_ADDRESS')} />
+                    <Redirect to={'/godsunchained/user/' + localStorage.getItem('WALLET_ADDRESS') + "/wallet"} />
                 </>
             }
         </>
