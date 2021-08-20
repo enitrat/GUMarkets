@@ -46,7 +46,7 @@ function NewOwners({ proto, quality }) {
                     {trades.map((trade) => (
                         <tr>
 
-                            <td><Link to={`/godsunchained/user/${trade.owner}`}>
+                            <td><Link to={`/godsunchained/user/${trade.owner}/history?type=all`}>
                                 {trade.owner}
                             </Link>
                             </td>

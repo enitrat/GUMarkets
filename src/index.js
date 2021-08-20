@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
 import LinkWrapper from './components/LinkWrapper';
-import Home from './pages/Home'
 import Account from './pages/Account'
 import Header from './components/Header'
 import Discounts from './pages/Discounts'
