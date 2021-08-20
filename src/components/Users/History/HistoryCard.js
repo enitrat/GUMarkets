@@ -9,7 +9,7 @@ function HistoryCard({ trade, address }) {
             <CardWrapper className="col">
                 <div>
                     <Item key={`${trade.token_proto}`} proto={trade} />
-                    {trade.makerAddress !== address ? <p>buy price : {trade.usd_price} </p> : <p>sell price : {trade.usd_price} </p>}
+                    {trade.makerAddress.toLowerCase() !== address ? <p>buy price : {trade.usd_price} </p> : <p>sell price : {trade.usd_price} </p>}
 
                 </div>
             </CardWrapper>
