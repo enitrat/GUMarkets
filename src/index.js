@@ -8,6 +8,7 @@ import Discounts from './pages/Discounts'
 import Browse from './pages/Browse'
 import Details from './pages/Details'
 import User from './pages/User'
+import EthTransfer from './pages/EthTransfer';
 import './styles/all.css'
 import { Parallax } from './styles/GlobalStyle'
 
@@ -37,6 +38,9 @@ ReactDOM.render(
 					</Route>
 					<Route path="/godsunchained/user/:id/:type">
 						<User />
+					</Route>
+					<Route path="/godsunchained/send">
+						<EthTransfer />
 					</Route>
 				</Parallax>
 			</LoggedProvider>
