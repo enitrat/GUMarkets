@@ -1,6 +1,6 @@
 import { Link } from '@imtbl/imx-link-sdk';
-import { ImmutableXClient } from '@imtbl/imx-link-lib';
-import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-link-types';
+import { ImmutableXClient } from '@imtbl/imx-sdk';
+import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-sdk';
 import Axios from 'axios';
 import { createPortal } from 'react-dom';
 
@@ -74,7 +74,7 @@ export async function getAllProtos() {
     const response = await Axios(url, config)
     const protos = response.data
     protos.forEach((proto) => proto.price = (proto.takerAssetAmount * ethPrice * Math.pow(10, -18)).toFixed(2))
-    return protos;
+    return protos.filter((proto) => JSON.parse(proto.metadata)!==null);
 
 
 }
@@ -85,16 +85,20 @@ export async function getAllProtos() {
  * @returns les 5 ordres de ventes les moins chers
  */
 export async function getCheapestSellOrders(metadata) {
-    const client = await ImmutableXClient.build({ publicApiUrl: apiAddress });
-    const ordersRequest = await client.getOrders({
-        page_size: 5,
-        status: 'active',
-        sell_token_address: '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
-        sell_metadata: metadata,
-        order_by: 'buy_quantity',
-        direction: 'asc'
-    });
-    return { orders: ordersRequest.result };
+    try {
+        const client = await ImmutableXClient.build({publicApiUrl: apiAddress});
+        const ordersRequest = await client.getOrders({
+            page_size: 7,
+            status: 'active',
+            sell_token_address: '0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
+            sell_metadata: metadata,
+            order_by: 'buy_quantity',
+            direction: 'asc'
+        });
+        return {orders: ordersRequest.result.filter((order) => order.buy.type==="ETH")};
+    }catch(err){
+        console.log(err);
+    }
 }
 
 
@@ -105,12 +109,16 @@ export async function getCheapestSellOrders(metadata) {
  * @returns les 5 ordres de vente les moins chers, prix converti en USD
  */
 export async function getCheapestUSDSellOrders(metadata) {
-    const { orders } = await getCheapestSellOrders(metadata)
-    const ethPrice = await getEthPrice();
-    orders.forEach((order) => {
-        order.buy.data.quantity = (order.buy.data.quantity * Math.pow(10, -18) * ethPrice).toFixed(2)
-    })
-    return { orders: orders }
+    try {
+        const {orders} = await getCheapestSellOrders(metadata)
+        const ethPrice = await getEthPrice();
+        orders.forEach((order) => {
+            if (order.buy.type === "ETH") order.buy.data.quantity = (order.buy.data.quantity * Math.pow(10, -18) * ethPrice).toFixed(2)
+        })
+        return {orders: orders}
+    }catch(err){
+        console.log(err);
+    }
 }
 
 
@@ -139,7 +147,7 @@ export async function getOrdersHistory(metadata, min_date) {
                 min_timestamp: min_date
 
             });
-            orders = orders.concat(ordersRequest.result);
+            orders = orders.concat(ordersRequest.result.filter((order) => order.buy.type==="ETH"));
             ordersCursors = ordersRequest.cursor;
 
 
@@ -173,7 +181,7 @@ export async function getLastTrades(metadata) {
     });
     //trier par updated_timestamp décroissant ()
     ordersRequest.result.sort((a, b) => (b.updated_timestamp.localeCompare(a.updated_timestamp)));
-    return ordersRequest.result.slice(0, 5);
+    return ordersRequest.result.filter(order => order.buy.type==="ETH").slice(0, 10);
 
 }
 

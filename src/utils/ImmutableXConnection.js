@@ -2,8 +2,8 @@
 //Sample Immutable X functions for collection interaction
 
 import { Link } from '@imtbl/imx-link-sdk';
-import { ImmutableXClient } from '@imtbl/imx-link-lib';
-import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-link-types';
+import { ImmutableXClient } from '@imtbl/imx-sdk';
+import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-sdk';
 import { createPortal } from 'react-dom';
 
 const linkAddress = 'https://link.x.immutable.com';

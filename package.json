@@ -7,6 +7,7 @@
     "@imtbl/imx-link-lib": "^1.0.157",
     "@imtbl/imx-link-sdk": "^1.0.148",
     "@imtbl/imx-link-types": "^1.0.75",
+    "@imtbl/imx-sdk": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -26,12 +27,12 @@
     "web3": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d server/build"
   },
   "eslintConfig": {
     "extends": [

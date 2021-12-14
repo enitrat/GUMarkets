@@ -22,7 +22,7 @@ function NewOwners({ proto, quality }) {
                 }
             );
             const tradesData = await getLastTradesData(json);
-            setTrades(tradesData.slice(0, 5))
+            setTrades(tradesData.slice(0, 10))
         } catch (err) { console.log(err) }
     }
 
