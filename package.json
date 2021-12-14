@@ -4,21 +4,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@imtbl/imx-link-lib": "^1.0.152",
-    "@imtbl/imx-link-sdk": "^1.0.142",
-    "@imtbl/imx-link-types": "^1.0.72",
+    "@imtbl/imx-link-lib": "^1.0.157",
+    "@imtbl/imx-link-sdk": "^1.0.148",
+    "@imtbl/imx-link-types": "^1.0.75",
+    "@imtbl/imx-sdk": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
+    "axios-rate-limit": "^1.3.0",
     "bootstrap": "^4.6.0",
     "express": "^4.17.1",
+    "node-rate-limiter": "^1.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "recharts": "^2.0.9",
+    "recharts": "^2.0.10",
     "styled-components": "^5.3.0",
     "web-vitals": "^1.0.1",
     "web3": "^1.4.0"
@@ -29,7 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d server/build"
   },
   "eslintConfig": {
     "extends": [

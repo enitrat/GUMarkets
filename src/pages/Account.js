@@ -2,9 +2,6 @@ import { setupAndLogin } from '../utils/ImmutableXConnection'
 import { LoggedContext } from '../utils/context'
 import { useEffect, useState, useContext } from 'react'
 import { Redirect } from 'react-router'
-
-import OwnedCollection from '../components/OwnedCollection'
-import OwnedPopup from '../components/OwnedPopup'
 import { Spinner } from 'react-bootstrap'
 
 
@@ -51,9 +48,9 @@ function Account() {
     return (
         <>
             {isLoading ? <div className="container d-flex justify-content-center">
-                < Spinner animation="grow" /> </div > :
+                < Spinner animation="grow" /> </div> :
                 <>
-                    <Redirect to={'/godsunchained/user/' + localStorage.getItem('WALLET_ADDRESS')} />
+                    <Redirect to={'/godsunchained/user/' + localStorage.getItem('WALLET_ADDRESS') + "/history?type=all"} />
                 </>
             }
         </>

@@ -12,7 +12,7 @@ import {
     ResponsiveContainer,
     Label,
 } from 'recharts';
-import { getEthPrice } from '../utils/getProtoCollection.js';
+import { getEthPrice, getHistoricalEthPrice } from '../utils/apiCalls.js';
 import { getPriceHistory } from '../utils/ImmutableXConnection.js'
 import { getAllOrdersHistory, getAvgDailyPrice } from '../utils/apiCalls.js';
 import { useState, useEffect } from 'react'
@@ -21,11 +21,10 @@ import { SpinnerWrapper } from '../styles/GlobalStyle'
 
 function Chart({ proto, quality, type }) {
     const [history, setHistory] = useState([])
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     const Init = async (proto, quality, min_date, type) => {
         setLoading(true)
-        console.log(min_date)
         //get price history
         const json = JSON.stringify(
             {
@@ -33,30 +32,36 @@ function Chart({ proto, quality, type }) {
                 "quality": [`${quality}`]
             }
         );
-        const ethprice = await getEthPrice()
+        const ethPriceHistory = await getHistoricalEthPrice()
+        const ethcurrentPrice = await getEthPrice();
+        let ethprice;
 
         if (type === "month-avg") {
             const hprices = await getAvgDailyPrice(json, min_date)
-            hprices.forEach((elem) => (
+            hprices.forEach((elem) => {
+                let found = ethPriceHistory.find(element => element[0] === elem.data.unix_time)
+                ethprice = found === undefined ? ethcurrentPrice : found[1]
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
-            ))
+            })
             console.log(hprices)
             setHistory(hprices)
         }
         else if (type === "month-detailed") {
             const hprices = await getAllOrdersHistory(json, min_date)
-            hprices.forEach((elem) => (
+            hprices.forEach((elem) => {
+                let found = ethPriceHistory.find(element => element[0] === elem.data.unix_time)
+                ethprice = found === undefined ? ethcurrentPrice : found[1]
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
-            ))
-            console.log(hprices)
+            })
             setHistory(hprices)
         }
         else if (type === "week-detailed") {
             const hprices = await getAllOrdersHistory(json, min_date)
-            hprices.forEach((elem) => (
+            hprices.forEach(async (elem) => {
+                let found = ethPriceHistory.find(element => element[0] === elem.data.unix_time)
+                ethprice = found === undefined ? ethcurrentPrice : found[1]
                 elem.data.price = +(elem.data.price * ethprice).toFixed(2)
-            ))
-            console.log(hprices)
+            })
             setHistory(hprices)
         }
 
@@ -67,7 +72,7 @@ function Chart({ proto, quality, type }) {
 
         let min_date;
         switch (type) {
-            case ("month-avg" || "month-detailed"):
+            case ("month-avg"):
                 min_date = new Date()
                 min_date.setMonth(min_date.getMonth() - 1)
                 min_date = min_date.toISOString();
@@ -77,17 +82,22 @@ function Chart({ proto, quality, type }) {
                 min_date.setTime(min_date.getTime() - 7 * 24 * 60 * 60 * 1000)
                 min_date = min_date.toISOString();
                 break;
+            case ("month-detailed"):
+                min_date = new Date()
+                min_date.setMonth(min_date.getMonth() - 1)
+                min_date = min_date.toISOString();
+                break;
             default:
+                console.log("===DEFAULT===", type)
                 min_date = undefined;
         }
-        console.log(type)
-        console.log(min_date)
         Init(proto, quality, min_date, type)
 
     }, [])
 
     return (
         <>
+
             {isLoading ?
                 <SpinnerWrapper>
                     <Spinner animation="grow" /> </SpinnerWrapper>
@@ -104,22 +114,22 @@ function Chart({ proto, quality, type }) {
                             left: 20,
                         }}
                     >
-                        <CartesianGrid stroke="#f5f5f5" />
-                        <XAxis dataKey="time" />
-                        <YAxis yAxisId="left" dataKey="data.price">
-                            <Label angle={270} position='left' style={{ textAnchor: 'middle' }}>
+
+                        <XAxis dataKey="time" stroke="#F2F2F3" />
+                        <YAxis yAxisId="left" name="price" dataKey="data.price" stroke="#D6DBDF">
+                            <Label angle={270} position='left' style={{ textAnchor: 'middle', fill: "#F4F6F7" }} >
                                 USD price
                             </Label>
                         </YAxis>
-                        <YAxis yAxisId="right" dataKey="data.volume" orientation="right" domain={[0, dataMax => (dataMax * 5)]}>
-                            <Label angle={90} position='right' style={{ textAnchor: 'middle' }}>
+                        <YAxis yAxisId="right" name="volume" dataKey="data.volume" orientation="right" domain={[0, dataMax => (dataMax * 5)]} stroke="#D6DBDF">
+                            <Label angle={90} position='right' style={{ textAnchor: 'middle', fill: "#F4F6F7" }}>
                                 Volume
                             </Label>
                         </YAxis>
-                        <Tooltip />
+                        <Tooltip contentStyle={{ "background-color": "rgba(0, 129, 189, 0.2)" }} wrapperStyle={{ color: "white" }} itemStyle={{ color: "white" }} />
                         <Legend />
-                        <Line yAxisId="left" type="monotone" dataKey="data.price" stroke="#8884d8" />
-                        <Bar yAxisId="right" dataKey="data.volume" barSize={5} fill="#413ea0" />
+                        <Line yAxisId="left" dot={false} name="price" type="monotone" dataKey="data.price" stroke="#A9DFBF " />
+                        <Bar yAxisId="right" name="volume" dataKey="data.volume" barSize={5} fill="#AF7AC5" />
 
                     </ComposedChart>
                 </div>

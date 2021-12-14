@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import axios from "axios";
-import { getEthPrice, getAllProtos } from '../../utils/apiCalls'
+import { getEthPrice, getAllProtos, getHistoricalEthPrice } from '../../utils/apiCalls'
+import totalprotos from '../../assets/totalprotos.json'
 
 
 const useGetNFTs = (address) => {
 
+
     const [data, setData] = useState([]);
     //const [allPrices, setAllPrices] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [statePoints, setPoints] = useState(0)
 
+    var points = 0;
 
     /**
      * Retourne la liste des prix de chaque proto
@@ -85,11 +89,12 @@ const useGetNFTs = (address) => {
      * 
      * @param {*} asset le NFT dont on veut récupérer le prix d'acquisition
      */
-    const getPriceInfo = async (asset, allPrices) => {
+    const getPriceInfo = async (asset, allPrices, historicalPrices) => {
 
         try {
-            const ethPrice = localStorage.getItem('ethPrice');
-
+            const ethcurrentPrice = localStorage.getItem('ethPrice');
+            const ethPriceHistory = historicalPrices
+            let ethPrice;
             let config = {
                 params: {
                     'page_size': 20,
@@ -101,9 +106,17 @@ const useGetNFTs = (address) => {
             }
             const url = 'https://api.x.immutable.com/v1/orders'
             const response = await axios.get(url, config)
+
             const result = response.data.result[0].amount_sold
             const proto = response.data.result[0].buy.data.properties.image_url.split("id=")[1].split("&q=").join("-")
+            //ethprice at updated_tmstp time
+            let unix_time = Date.parse(response.data.result[0].updated_timestamp)
+            unix_time = new Date(unix_time).setUTCHours(0, 0, 0, 0)
+            let found = ethPriceHistory.find(element => element[0] === unix_time)
+            ethPrice = found === undefined ? ethcurrentPrice : found[1]
+
             const price = (result * Math.pow(10, -18) * ethPrice).toFixed(2)
+            points += totalprotos[proto]["points"]
             asset.token_proto = proto;
             asset.buyPrice = price;
             asset.actualPrice = getActualPrice(asset.token_proto, allPrices)
@@ -121,6 +134,12 @@ const useGetNFTs = (address) => {
 
     };
 
+    /**
+     * 
+     * @param {*} token_proto 
+     * @param {*} allPrices la liste des prix actuels
+     * @returns le prix du proto analysé
+     */
     const getActualPrice = (token_proto, allPrices) => {
         try {
             return (allPrices.filter((proto) => proto.token_proto === token_proto)[0].price)
@@ -132,30 +151,30 @@ const useGetNFTs = (address) => {
 
     const iterOnAssets = async (assets, allPrices) => {
 
-        for (const asset of assets) {
+        const historicalPrices = await getHistoricalEthPrice();
+        // for (const asset of assets) {
 
-            //1. token_proto, 2. buyPrice
-            //3. actual_Price
-            //4. diff_price
-            await getPriceInfo(asset, allPrices)
-        };
+        //     //Pour chaque asset, on lui rajoute une propriété token_proto, buyPrice, actualPrice, diffPrice
+
+        //     await getPriceInfo(asset, allPrices, historicalPrices)
+        // };
+
+        await Promise.all(assets.map(async (asset) => {
+            await getPriceInfo(asset, allPrices, historicalPrices)
+        }))
         return;
     }
 
     async function init() {
         try {
             setLoading(true)
-
-
             // On récupère les prix par proto
             const allPrices = await getAllPrices();
             //On récupère la liste des assets, telle que retournée par l'API
             const assets = await getAllAssets();
-            //Pour chaque asset, on lui rajoute une propriété :
-            console.log(allPrices)
-            console.log(assets)
             await iterOnAssets(assets, allPrices);
             setData(assets)
+            setPoints(points)
             setLoading(false)
 
         } catch (err) {
@@ -170,7 +189,7 @@ const useGetNFTs = (address) => {
         init();
     }, []);
 
-    return { data: data, isLoading: isLoading /*allPrices: allPrices*/ }
+    return { data: data, isLoading: isLoading, points: statePoints /*allPrices: allPrices*/ }
 }
 
 export default useGetNFTs

@@ -18,21 +18,21 @@ function DetailedTab({ proto, quality, id, orders, price, getQuality }) {
     }
   `
 
+
     return (
         <>
-            <div className="last trades">
+            <div className="d-flex align-items-center">
                 <img className='nft-item-cover' src={`https://card.godsunchained.com/?id=${proto}&q=${quality}`} alt={`${id} cover`} />
+                <div>
+                    <span>Last trades : </span>
 
-                Last trades :
-                <NewOwners proto={proto} quality={getQuality(quality)} />
+                    <NewOwners proto={proto} quality={getQuality(quality)} />
+                </div>
 
             </div>
 
             <Pcontainer>
                 <Chart proto={proto} quality={getQuality(quality)} type={"month-detailed"} />
-
-            </Pcontainer>
-            <Pcontainer>
                 <Chart proto={proto} quality={getQuality(quality)} type={"week-detailed"} />
 
             </Pcontainer>

@@ -4,6 +4,9 @@ import Card from './Card'
 import WalletData from './WalletData'
 import '../../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { SearchWrapper, Parallax, SearchBar, CardWrapper } from '../../styles/GlobalStyle'
+
 
 
 function CardsList({ address }) {
@@ -32,7 +35,7 @@ function CardsList({ address }) {
      *      }
      * ]
      */
-    const { data: userCards, isLoading } = useGetNFTs(address);
+    const { data: userCards, isLoading, points } = useGetNFTs(address);
 
     const [searchParam, setSearchParam] = useState('');
 
@@ -45,26 +48,32 @@ function CardsList({ address }) {
 
 
     return (
-        <div>
-            <div className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a proto" onChange={handleInput} />
-            </div>
+        <>
+            <SearchWrapper className="container d-flex justify-content-center">
+                <SearchBar type="text" placeholder="Search a card" onChange={handleInput} />
+            </SearchWrapper>
             {isLoading ? <div className="container d-flex justify-content-center">
                 <Spinner animation="grow" /> </div> :
                 <>
-                    <WalletData assets={userCards} />
+                    <Link to={`/godsunchained/user/${address}/history?type=all`}>Show trade history</Link>
+                    <WalletData assets={userCards} points={points} />
                     <ul className="list-unstyled">
-                        <div className="row">
-                            {userCards.map((card) => (
+                        <div className="row" style={{ width: "100%" }}>
+                            {userCards.map((card) => {
 
-                                card.metadata.name.toLowerCase().includes(searchParam) && <Card data={card} />
-                            )
+                                return (
+                                    card.metadata.name.toLowerCase().includes(searchParam) &&
+
+                                    <Card data={card} />
+                                )
+
+                            }
                             )}
                         </div>
                     </ul>
                 </>}
 
-        </div>
+        </>
     )
 }
 

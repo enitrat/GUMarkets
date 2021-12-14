@@ -3,18 +3,24 @@ import Item from './Item'
 import '../styles/Collection.css'
 import { Spinner } from 'react-bootstrap'
 import { getAllProtos } from '../utils/apiCalls'
+import { SearchWrapper, Parallax, CardWrapper, SearchBar } from '../styles/GlobalStyle'
+import styled from 'styled-components'
 
 function Collection({ showPopup, setPopup }) {
     const [allProtos, setAllProtos] = useState([])
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [searchParam, setSearchParam] = useState("");
 
 
+
     async function initPage() {
-        setLoading(true)
-        const myProtos = await getAllProtos();
-        setAllProtos(myProtos)
-        setLoading(false)
+        try {
+            setLoading(true)
+            const myProtos = await getAllProtos();
+            setAllProtos(myProtos)
+            console.log(myProtos)
+            setLoading(false)
+        } catch (err) { console.log(err) }
     }
 
     useEffect(() => {
@@ -28,17 +34,30 @@ function Collection({ showPopup, setPopup }) {
 
     return (
         <>
-            <div className="container d-flex justify-content-center">
-                <input type="text" placeholder="Search a proto" onChange={handleInput} />
-            </div>
-            {isLoading ? <div className="container d-flex justify-content-center">
-                <Spinner animation="grow" /> </div> :
+            <SearchWrapper className="container d-flex justify-content-center">
+                <SearchBar type="text" placeholder="Search a card" onChange={handleInput} />
+            </SearchWrapper>
+            {isLoading ?
+                <div className="container d-flex justify-content-center">
+                    <Spinner animation="grow" />
+                </div>
+                :
                 <ul className="list-unstyled">
-                    <div className="row">
-                        {allProtos.map((proto) => (
+                    <div className="container-fluid">
+                        <div className="row" style={{ width: "100%" }}>
+                            {allProtos.map((proto) => {
 
-                            JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) && <Item key={`${proto.token_proto}`} proto={proto}></Item>
-                        ))}
+                                return (
+
+                                    JSON.parse(proto.metadata).name !== undefined && JSON.parse(proto.metadata).name.toLowerCase().includes(searchParam) &&
+                                    <CardWrapper className="col">
+                                        <Item key={`${proto.token_proto}`} proto={proto} />
+                                    </CardWrapper>
+
+                                )
+                            }
+                            )}
+                        </div>
                     </div>
                 </ul>
             }

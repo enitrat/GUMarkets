@@ -6,6 +6,7 @@ import '../../styles/details.css'
 
 
 function GeneralTab({ proto, quality, id, orders, price, getQuality }) {
+
     const Pcontainer = styled.div`
     display:flex;
     flex-direction:row;
@@ -36,7 +37,7 @@ function GeneralTab({ proto, quality, id, orders, price, getQuality }) {
                 <p>For sale:
                     {orders.map((order) => {
                         return (
-                            <p><BuyButton value={order.order_id} onClick={handleBuy}>{price} USD </BuyButton></p>
+                            <p><BuyButton value={order.order_id} onClick={handleBuy}>{order.buy.data.quantity} USD </BuyButton></p>
                         )
                     }
                     )}</p>

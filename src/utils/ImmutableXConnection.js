@@ -2,8 +2,8 @@
 //Sample Immutable X functions for collection interaction
 
 import { Link } from '@imtbl/imx-link-sdk';
-import { ImmutableXClient } from '@imtbl/imx-link-lib';
-import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-link-types';
+import { ImmutableXClient } from '@imtbl/imx-sdk';
+import { ERC721TokenType, ETHTokenType } from '@imtbl/imx-sdk';
 import { createPortal } from 'react-dom';
 
 const linkAddress = 'https://link.x.immutable.com';
@@ -72,6 +72,8 @@ export async function completeWithdrawal() {
 export async function showUserHistory() {
     link.history({});
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Asset Management /////////////////////////////
@@ -251,6 +253,14 @@ export async function getPriceHistory(metadata, min_date) {
 //Opens the Link SDK popup to complete an order
 export async function fillOrder(order) {
     await link.buy({ orderId: order });
+}
+
+export async function transferEth(amount, destination) {
+    await link.transfer({
+        type: ETHTokenType.ETH,
+        amount: amount,
+        to: destination,
+    });
 }
 
 export const toEthPrice = (price) => {
