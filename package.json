@@ -27,7 +27,7 @@
     "web3": "^1.4.0"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build && rm -rf server/build && mv build server",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
